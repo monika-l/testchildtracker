@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">ChildTracker</string>
+    <string name="txt_next">NEXT</string>
+    <string name="agrrement_txt">By singing up you accept our Terms of service and privacy policy. For members under 13, submit a Consent Form</string>
+    <string name="phone_no">Phone Number</string>
+    <string name="phone_number_title"><![CDATA[<font color=\'#000\'>Phone Number</font>]]></string>
+    <string name="notify_activity_title"><![CDATA[<font color=\'#000\'>Notify Message</font>]]></string>
+    <string name="add_memeber__child_name"><![CDATA[<font color=\'#000\'>Child Name</font>]]></string>
+    <string name="message_success"><![CDATA[<font color=\'#000\'>Message confirmation</font>]]></string>
+    <string name="sending_message"><![CDATA[<font color=\'#000\'>Sending Message ...</font>]]></string>
+    <string name="add_memeber_age"><![CDATA[<font color=\'#000\'>Child Age</font>]]></string>
+    <string name="add_memeber_height"><![CDATA[<font color=\'#000\'>Child height</font>]]></string>
+    <string name="add_memeber_fathers_name"><![CDATA[<font color=\'#000\'>Fathers name</font>]]></string>
+    <string name="add_memeber_mothers_name"><![CDATA[<font color=\'#000\'>Mothers Name</font>]]></string>
+    <string name="add_memeber_address"><![CDATA[<font color=\'#000\'>Address</font>]]></string>
+    <string name="add_memeber_comment"><![CDATA[<font color=\'#000\'>Comment</font>]]></string>
+    <string name="add_memeber_images"><![CDATA[<font color=\'#000\'>Add Images</font>]]></string>
+
+    <string name="password_activity_title"><![CDATA[<font color=\'#000\'>Password</font>]]></string>
+    <string name="dashboard_activity_title"><![CDATA[<font color=\'#000\'>Dashboard</font>]]></string>
+    <string name="email_activity_title"><![CDATA[<font color=\'#000\'>Email</font>]]></string>
+    <string name="photo_activity_title"><![CDATA[<font color=\'#000\'>Add Photo</font>]]></string>
+    <string name="signup_txt">Sighup</string>
+    <string name="signin_txt">Signin</string>
+    <string name="ask_for_signup">Signup?</string>
+</resources>

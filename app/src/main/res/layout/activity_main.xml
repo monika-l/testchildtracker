@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/phone_number_edt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_margin="@dimen/margin_8"
+        android:layout_centerInParent="true"
+        android:hint="Phone-number"
+        android:inputType="phone" />
+
+    <com.rilixtech.CountryCodePicker
+        android:id="@+id/ccp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/phone_number_edt" />
+
+
+    <TextView
+        android:id="@+id/tvTermsAndConditions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btNext"
+        android:layout_margin="@dimen/margin_8"
+        android:gravity="center"
+        android:text="@string/agrrement_txt"
+        android:textSize="@dimen/font_10" />
+
+
+    <Button
+        android:id="@+id/btNext"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/blue"
+        android:text="@string/txt_next"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_22" />
+
+</RelativeLayout>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_gravity="center"
+        card_view:cardCornerRadius="5dp"
+        card_view:cardElevation="6dp"
+        card_view:cardMaxElevation="10dp"
+        card_view:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <ImageView
+                android:layout_width="80dp"
+                android:src="@mipmap/ic_user"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:id="@+id/ivUserImage"
+                android:layout_height="80dp" />
+
+            <TextView
+                android:id="@+id/tvMemberName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_16"
+                android:textSize="@dimen/font_16"
+                android:layout_toRightOf="@+id/ivUserImage"
+                android:layout_marginTop="@dimen/margin_4"
+                android:layout_alignParentTop="true"
+                android:text="Sachin Shah" />
+
+            <TextView
+                android:id="@+id/tvMemberPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textSize="@dimen/font_16"
+                android:layout_marginTop="@dimen/margin_4"
+                android:layout_below="@+id/tvMemberName"
+                android:layout_alignLeft="@+id/tvMemberName"
+
+                android:text="8524114565" />
+
+            <Button
+                android:layout_width="100dp"
+                android:background="@color/blue"
+                android:text="Notify"
+                android:id="@+id/notifyMemberMessage"
+                android:layout_below="@+id/tvMemberPhone"
+                android:layout_marginTop="@dimen/margin_4"
+                android:layout_alignLeft="@+id/tvMemberPhone"
+                android:textColor="@android:color/white"
+                android:layout_height="30dp" />
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>

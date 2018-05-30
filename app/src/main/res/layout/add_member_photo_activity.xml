@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/llPhoto"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/margin_16"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="left">
+
+        <ImageView
+            android:id="@+id/ivProfilePic"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="@dimen/margin_16"
+            android:src="@mipmap/ic_acount_white" />
+
+        <ImageView
+            android:id="@+id/ivEditIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="bottom"
+            android:layout_margin="@dimen/margin_16"
+            android:src="@mipmap/ic_edit_icon" />
+    </FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_below="@+id/llPhoto"
+        android:text="Add Photo"
+        android:gravity="center_horizontal"
+        android:layout_height="wrap_content" />
+
+
+
+    <Button
+        android:id="@+id/btNext"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/blue"
+        android:text="Done"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_22" />
+
+</RelativeLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="childtracker.roti.com.childtracker">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activities.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.UserPasswordActivity"></activity>
+        <activity android:name=".activities.UserEmailActivity"></activity>
+        <activity android:name=".activities.UserPhotoActivity"></activity>
+        <activity android:name=".activities.DashboardActivity"></activity>
+        <activity android:name=".activities.NotifyActivity"></activity>
+        <activity android:name=".activities.AddMemberActivity"></activity>
+        <activity android:name=".activities.AddMemberAddressActivity"></activity>
+        <activity android:name=".activities.AddMemberCommentActivity"></activity>
+        <activity android:name=".activities.AddMemberFathersNameActivity"></activity>
+        <activity android:name=".activities.AddMemberMotherNameActivity"></activity>
+        <activity android:name=".activities.AddMemberHeightActivity"></activity>
+        <activity android:name=".activities.AddMemberAgeActivity"></activity>
+        <activity android:name=".activities.AddMemberPhotoActivity"></activity>
+        <activity android:name=".activities.NotificationsActivity"></activity>
+        <activity android:name=".activities.SendMessageSuccessfulActivity"></activity>
+        <activity android:name=".activities.SendMessageToCommunityActivity"></activity>
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA1oMybxi-DInQr4MP4I8Tb1cSeZog4wW8" />
+
+    </application>
+
+</manifest>
