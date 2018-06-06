@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class LoginResponseDto {
     private String userId;
     private String name;
-    private ArrayList<UserPhoto> photo;
+    private String photo;
     private String mobile;
     private String email;
     private String password;
@@ -28,11 +28,11 @@ public class LoginResponseDto {
         this.name = name;
     }
 
-    public ArrayList<UserPhoto> getPhoto() {
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(ArrayList<UserPhoto> photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 
@@ -117,7 +117,7 @@ public class LoginResponseDto {
         private String motherName;
         private String address;
         private String comment;
-        private ArrayList<UserPhoto> photo;
+        private String photo;
 
         public String getId() {
             return id;
@@ -191,11 +191,11 @@ public class LoginResponseDto {
             this.comment = comment;
         }
 
-        public ArrayList<UserPhoto> getPhoto() {
+        public String getPhoto() {
             return photo;
         }
 
-        public void setPhoto(ArrayList<UserPhoto> photo) {
+        public void setPhoto(String photo) {
             this.photo = photo;
         }
     }

@@ -6,8 +6,22 @@ public class Constants {
     public static final String EXTRA_PASSWORD = "extra_password";
     public static final String EXTRA_EMAIL = "extra_email";
     public static final String EXTRA_PHOTO = "extra_photo";
+    public static final String EXTRA_NAME = "extra_name";
+    public static final String EXTRA_AGE = "extra_age";
+    public static final String EXTRA_HEIGHT = "extra_height";
+    public static final String EXTRA_FATHER_NAME = "extra_father";
+    public static final String EXTRA_MOTHER_NAME = "extra_mother";
+    public static final String EXTRA_COMMENT = "extra_comment";
+    public static final String EXTRA_ADDRESS = "extra_address";
+    public static final String EXTRA_MEMBER_DETAILS = "extra_member_details";
 
-    public static final String DOMAIN_API = "http://54.186.94.218";
+
+    public static final String SHARED_PREF_USER_ID = "shared_pref_user_id";
+    public static final String SHARED_PREF_ALL_NOTFICATION = "shared_pref_all_notifications";
+    public static final String SHARED_PREF_PHONE = "shared_pref_phone";
+    public static final String SHARED_PREF_ALL_MEMBERS = "shared_pref_all_members";
+
+    public static final String DOMAIN_API = "http://52.91.166.193";
 
     public static final String ADD_MEMBER_API = "/Webservices/ChildTracker/AddMembers.php";
     public static final String ADD_MEMBER_API_MEMBER_NAME = "memberName";
@@ -17,15 +31,30 @@ public class Constants {
     public static final String ADD_MEMBER_API_MOTHER_NAME = "motherName";
     public static final String ADD_MEMBER_API_COMMENTS = "comment";
     public static final String ADD_MEMBER_API_ADDRESS = "address";
+    public static final String ADD_MEMBER_API_PHOTO = "photo";
+    public static final String ADD_MEMBER_API_USER_ID = "userId";
+
+    public static final String BROADCAST_MESSAGE_API = "/Webservices/ChildTracker/OneSignalToAll.php";
+    public static final String BROADCAST_MESSAGE_API_MESSAGE = "message";
+
 
 
     public static final String LOGIN_API = "/Webservices/ChildTracker/LoginExistingUser.php";
     public static final String LOGIN_API_MOBILE_NO = "mobileNumber";
 
+    public static final String REGISTER_API = "/Webservices/ChildTracker/LoginNewUser.php";
+    public static final String REGISTER_API_NAME = "name";
+     public static final String REGISTER_API_MOBILE = "mobile";
+    public static final String REGISTER_API_EMAIL = "email";
+    public static final String REGISTER_API_PHOTO = "photo";
+    public static final String REGISTER_API_PASSWORD = "password";
+
 
     public static final String CREATE_LOGIN_API = "http://54.186.94.218";
 
-    public static final String UPLOAD_API = "http://54.186.94.218";
+    public static final String UPLOAD_API = "/Webservices/ChildTracker/upload_image.php";
+    public static final String UPLOAD_API_USER_ID = "userId";
+    public static final String UPLOAD_API_MEMBER_ID = "memberId";
 
     public static final String BROADCAST_MESSAGE_TO_COMMUNITY_API = "http://54.186.94.218";
 

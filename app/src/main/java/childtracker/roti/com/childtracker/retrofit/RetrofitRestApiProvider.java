@@ -4,8 +4,11 @@ import android.app.Activity;
 import android.util.Log;
 
 import childtracker.roti.com.childtracker.dto.GenericSuccessResponseDto;
+import childtracker.roti.com.childtracker.dto.LoginPojo;
 import childtracker.roti.com.childtracker.dto.LoginResponseDto;
 import childtracker.roti.com.childtracker.dto.MembersPojo;
+import childtracker.roti.com.childtracker.interfaces.IAddMember;
+import childtracker.roti.com.childtracker.interfaces.IBroadcastMessageToAll;
 import childtracker.roti.com.childtracker.interfaces.ILogin;
 import childtracker.roti.com.childtracker.interfaces.IRegisterNewUser;
 import childtracker.roti.com.childtracker.utils.ChildTrackerUtils;
@@ -33,7 +36,6 @@ public class RetrofitRestApiProvider {
 
     public void loginUser(Callback callback, String mobile) {
         if (ChildTrackerUtils.checkInternetConnection(mContext) == true) {
-            ChildTrackerUtils.enableWindowProcessing(mContext);
             Log.d(TAG, "inside loginUser");
             ILogin iLogin = mRetrofit.create(ILogin.class);
             Call<LoginResponseDto> call = iLogin.loginUser(mobile);
@@ -41,14 +43,39 @@ public class RetrofitRestApiProvider {
         }
     }
 
-    public void registerUsers(Callback callback, MembersPojo member) {
+    public void registerUsers(Callback callback, LoginPojo loginPojo) {
         if (ChildTrackerUtils.checkInternetConnection(mContext) == true) {
-            ChildTrackerUtils.enableWindowProcessing(mContext);
             Log.d(TAG, "inside registerUsers");
             IRegisterNewUser iRegisterNewUser = mRetrofit.create(IRegisterNewUser.class);
-            Call<GenericSuccessResponseDto> call = iRegisterNewUser.registerNewUser(member.memberName,
-                    member.age,member.height,member.fatherName,member.motherName,member.comment,
-                    member.address
+            Call<GenericSuccessResponseDto> call = iRegisterNewUser.registerNewUser(loginPojo.name,
+                    loginPojo.mobile, loginPojo.email, loginPojo.photo, loginPojo.password
+            );
+            call.enqueue(callback);
+        }
+    }
+
+    public void sendMessageToCommunity(Callback callback, String message) {
+        if (ChildTrackerUtils.checkInternetConnection(mContext) == true) {
+            Log.d(TAG, "inside registerUsers");
+            IBroadcastMessageToAll iBroadcastMessageToAll = mRetrofit.create(IBroadcastMessageToAll.class);
+            Call<Void> call = iBroadcastMessageToAll.broadcastMessage(message);
+            call.enqueue(callback);
+        }
+    }
+
+    public void addMembers(Callback callback, MembersPojo membersPojo) {
+        if (ChildTrackerUtils.checkInternetConnection(mContext) == true) {
+            Log.d(TAG, "inside addMembers");
+            IAddMember iAddMember = mRetrofit.create(IAddMember.class);
+            Call<GenericSuccessResponseDto> call = iAddMember.registerNewUser(membersPojo.memberName,
+                    membersPojo.age,
+                    membersPojo.height,
+                    membersPojo.fatherName,
+                    membersPojo.motherName,
+                    membersPojo.comment,
+                    membersPojo.address,
+                    membersPojo.photo,
+                    membersPojo.userId
             );
             call.enqueue(callback);
         }

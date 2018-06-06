@@ -1,3 +1,17 @@
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/'}
+    }
+    dependencies {
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.10.1, 0.99.99]'
+    }
+}
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
+repositories {
+    maven { url 'https://maven.google.com' }
+}
+
 apply plugin: 'com.android.application'
 
 android {
@@ -9,6 +23,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [
+                onesignal_app_id: '401eef8e-d644-45c0-8dac-460984be3ac6',
+                // Project number pulled from dashboard, local value is ignored.
+                onesignal_google_project_number: '844728827932'
+        ]
     }
     buildTypes {
         release {
@@ -43,4 +62,11 @@ dependencies {
     compile 'com.github.DamanSingh4321:ProProgressViews:v1.1'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.squareup.okio:okio:1.7.0'
+    compile 'com.google.code.gson:gson:2.6.2'
+     compile 'pub.devrel:easypermissions:0.2.0'
+    implementation 'com.onesignal:OneSignal:[3.9.1, 3.99.99]'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
+apply plugin: 'com.google.gms.google-services'

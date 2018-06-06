@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.lang.reflect.Type;
 import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -315,6 +316,12 @@ public class ChildTrackerUtils {
      * @return
      */
     public static Object convertJsonToObject(String json, Class classType) {
+        Gson gson = new Gson();
+        Object obj = gson.fromJson(json, classType);
+        return obj;
+    }
+
+    public static Object convertJsonToObject(String json, Type classType) {
         Gson gson = new Gson();
         Object obj = gson.fromJson(json, classType);
         return obj;

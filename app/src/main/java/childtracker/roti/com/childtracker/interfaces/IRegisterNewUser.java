@@ -9,15 +9,14 @@ import retrofit2.http.POST;
 
 
 public interface IRegisterNewUser {
-    @POST(Constants.ADD_MEMBER_API)
+    @POST(Constants.REGISTER_API)
     @FormUrlEncoded
     Call<GenericSuccessResponseDto> registerNewUser(
-            @Field(Constants.ADD_MEMBER_API_MEMBER_NAME) String memberName,
-            @Field(Constants.ADD_MEMBER_API_AGE) String age,
-                    @Field(Constants.ADD_MEMBER_API_HEIGHT) String height,
-                    @Field(Constants.ADD_MEMBER_API_FATHER_NAME) String fatherName,
-                    @Field(Constants.ADD_MEMBER_API_MOTHER_NAME) String motherName,
-                    @Field(Constants.ADD_MEMBER_API_COMMENTS) String comments,
-                    @Field(Constants.ADD_MEMBER_API_ADDRESS) String address
+            @Field(Constants.REGISTER_API_NAME) String name,
+                     @Field(Constants.REGISTER_API_MOBILE) String mobile,
+                    @Field(Constants.REGISTER_API_EMAIL) String email,
+                    @Field(Constants.REGISTER_API_PHOTO) String photo,
+                    @Field(Constants.REGISTER_API_PASSWORD) String password
+
     );
 }

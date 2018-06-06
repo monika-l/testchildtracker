@@ -7,19 +7,25 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import childtracker.roti.com.childtracker.R;
 import childtracker.roti.com.childtracker.adapter.NotificationAdapter;
-import childtracker.roti.com.childtracker.dto.NotificationsDto;
+import childtracker.roti.com.childtracker.utils.ChildTrackerUtils;
+import childtracker.roti.com.childtracker.utils.Constants;
+import childtracker.roti.com.childtracker.utils.CustomSharedPreferance;
 
 public class NotificationsActivity extends AppCompatActivity {
 
 
-    private ArrayList<NotificationsDto.NotificationsMetaData> memberDtos = new ArrayList<NotificationsDto.NotificationsMetaData>();
+   // private ArrayList<NotificationsDto.NotificationsMetaData> memberDtos = new ArrayList<NotificationsDto.NotificationsMetaData>();
 
+    ArrayList<String> allNotifications = new ArrayList<String>();
     @BindView(R.id.rvNotification)
     RecyclerView rvMembersList;
 
@@ -32,7 +38,7 @@ public class NotificationsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(Html.fromHtml(getString(R.string.notify_activity_title)));
         prepareData();
 
-        NotificationAdapter adapter = new NotificationAdapter(memberDtos);
+        NotificationAdapter adapter = new NotificationAdapter(allNotifications);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         rvMembersList.setLayoutManager(mLayoutManager);
         rvMembersList.setItemAnimator(new DefaultItemAnimator());
@@ -42,16 +48,9 @@ public class NotificationsActivity extends AppCompatActivity {
     private void prepareData()
 
     {
-        NotificationsDto.NotificationsMetaData memberMetadata = new NotificationsDto().new NotificationsMetaData();
-        memberMetadata.setMemberName("Sachin Shah");
-        memberMetadata.setMemberPhoneNo("874554120");
-        memberMetadata.setMemberMessage("Please find this member near you");
-        memberDtos.add(memberMetadata);
-
-        memberMetadata = new NotificationsDto().new NotificationsMetaData();
-        memberMetadata.setMemberName("Meena Shah");
-        memberMetadata.setMemberPhoneNo("874998545");
-        memberMetadata.setMemberMessage("Please find this member near you");
-        memberDtos.add(memberMetadata);
+        CustomSharedPreferance customSharedPreferance = new CustomSharedPreferance(this);
+        Type listType = new TypeToken<ArrayList<String>>() {
+        }.getType();
+        allNotifications = (ArrayList<String>) ChildTrackerUtils.convertJsonToObject(customSharedPreferance.getString(Constants.SHARED_PREF_ALL_NOTFICATION), listType);
     }
 }

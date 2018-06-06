@@ -9,5 +9,7 @@ public class MembersPojo {
     public String motherName;
     public String comment;
     public String address;
+    public String photo;
+    public String userId;
 
 }

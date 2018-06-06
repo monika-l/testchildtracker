@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "844728827932",
+    "firebase_url": "https://childtracker-1527673762021.firebaseio.com",
+    "project_id": "childtracker-1527673762021",
+    "storage_bucket": "childtracker-1527673762021.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:844728827932:android:1f6052685327b19c",
+        "android_client_info": {
+          "package_name": "childtracker.roti.com.childtracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "844728827932-5hce7emv5bskvf0c320qe19sd45jn6o4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "childtracker.roti.com.childtracker",
+            "certificate_hash": "0cb77b730e44c087453943c58adb9b20470b0da6"
+          }
+        },
+        {
+          "client_id": "844728827932-k1iagskonq4ddnhs4con0vaus1bdvq8k.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "844728827932-k1iagskonq4ddnhs4con0vaus1bdvq8k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7h6C5tySsgUf6DV4VPPQw39rMSKoQj4g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "844728827932-k1iagskonq4ddnhs4con0vaus1bdvq8k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -10,25 +10,24 @@ import android.widget.TextView;
 import java.util.List;
 
 import childtracker.roti.com.childtracker.R;
-import childtracker.roti.com.childtracker.dto.NotificationsDto;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.MyViewHolder> {
 
-    private List<NotificationsDto.NotificationsMetaData> mMemberMetaData;
+    private List<String> mMemberMetaData;
+//    private List<NotificationsDto.NotificationsMetaData> mMemberMetaData;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvName, tvMobile, tvAddress;
+        public TextView tvMessage, tvMobile, tvAddress;
 
         public MyViewHolder(View view) {
             super(view);
-            tvName = (TextView) view.findViewById(R.id.tvMemberName);
-            tvMobile = (TextView) view.findViewById(R.id.tvMemberMobile);
-            tvAddress = (TextView) view.findViewById(R.id.tvMessage);
+            tvMessage = (TextView) view.findViewById(R.id.tvMessage);
+
         }
     }
 
 
-    public NotificationAdapter(List<NotificationsDto.NotificationsMetaData> memberMetadata) {
+    public NotificationAdapter(List<String> memberMetadata) {
         this.mMemberMetaData = memberMetadata;
     }
 
@@ -42,10 +41,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        NotificationsDto.NotificationsMetaData member = mMemberMetaData.get(position);
-        holder.tvName.setText(member.getMemberName());
-        holder.tvMobile.setText(member.getMemberPhoneNo());
-        holder.tvAddress.setText(member.getMemberMessage());
+//        NotificationsDto.NotificationsMetaData member = mMemberMetaData.get(position);
+//        holder.tvName.setText(member.getMemberName());
+//        holder.tvMobile.setText(member.getMemberPhoneNo());
+//        holder.tvAddress.setText(member.getMemberMessage());
+        holder.tvMessage.setText(mMemberMetaData.get(position));
     }
 
     @Override

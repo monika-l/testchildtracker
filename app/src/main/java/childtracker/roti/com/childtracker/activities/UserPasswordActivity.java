@@ -2,14 +2,21 @@ package childtracker.roti.com.childtracker.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import childtracker.roti.com.childtracker.R;
+import childtracker.roti.com.childtracker.utils.Constants;
 
 public class UserPasswordActivity extends AppCompatActivity {
+
+
+    @BindView(R.id.tvPassword)
+    TextInputEditText mEdPassword;
 
     @OnClick(R.id.btNext)
     public void onSignup() {
@@ -21,6 +28,8 @@ public class UserPasswordActivity extends AppCompatActivity {
     public void onNext() {
         Intent dashbaordActivity = new Intent(UserPasswordActivity
                 .this, UserEmailActivity.class);
+        dashbaordActivity.putExtras(getIntent());
+        dashbaordActivity.putExtra(Constants.EXTRA_PASSWORD,mEdPassword.getText().toString());
         startActivity(dashbaordActivity);
     }
 
