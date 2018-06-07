@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.TextUtils;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,10 +22,14 @@ public class AddMemberFathersNameActivity extends AppCompatActivity {
 
     @OnClick(R.id.btNext)
     public void onNext() {
-        Intent activity = new Intent(AddMemberFathersNameActivity.this, AddMemberMotherNameActivity.class);
-        activity.putExtras(getIntent());
-        activity.putExtra(Constants.EXTRA_FATHER_NAME,tvFatherName.getText().toString());
-        startActivity(activity);
+        if (false == TextUtils.isEmpty(tvFatherName.getText().toString())) {
+            Intent activity = new Intent(AddMemberFathersNameActivity.this, AddMemberMotherNameActivity.class);
+            activity.putExtras(getIntent());
+            activity.putExtra(Constants.EXTRA_FATHER_NAME, tvFatherName.getText().toString());
+            startActivity(activity);
+        } else {
+            Toast.makeText(AddMemberFathersNameActivity.this, "Please enter valid father name", Toast.LENGTH_LONG).show();
+        }
     }
 
 

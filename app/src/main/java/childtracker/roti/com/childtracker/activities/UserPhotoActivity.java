@@ -11,10 +11,14 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.List;
@@ -28,6 +32,7 @@ import childtracker.roti.com.childtracker.dto.LoginPojo;
 import childtracker.roti.com.childtracker.interfaces.UploadImageInterface;
 import childtracker.roti.com.childtracker.retrofit.RetrofitRestApiProvider;
 import childtracker.roti.com.childtracker.retrofit.UploadObject;
+import childtracker.roti.com.childtracker.utils.CircleTransform;
 import childtracker.roti.com.childtracker.utils.Constants;
 import childtracker.roti.com.childtracker.utils.CustomSharedPreferance;
 import okhttp3.MediaType;
@@ -52,6 +57,9 @@ public class UserPhotoActivity extends AppCompatActivity implements EasyPermissi
     @BindView(R.id.pgProgressBar)
     ProgressBar pgProgressBar;
 
+    @BindView(R.id.ivProfilePic)
+    ImageView ivProfilePic;
+
     @OnClick(R.id.llPhoto)
     public void onProfileClick() {
         Intent openGalleryIntent = new Intent(Intent.ACTION_PICK);
@@ -71,14 +79,19 @@ public class UserPhotoActivity extends AppCompatActivity implements EasyPermissi
 
     @OnClick(R.id.btNext)
     public void onNext() {
-        RetrofitRestApiProvider retrofitRestApiProvider = new RetrofitRestApiProvider(UserPhotoActivity.this, Constants.DOMAIN_API);
-        LoginPojo loginPojo = new LoginPojo();
-        loginPojo.email = getIntent().getStringExtra(Constants.EXTRA_EMAIL);
-        loginPojo.mobile = getIntent().getStringExtra(Constants.EXTRA_MOBILE);
-        loginPojo.name = mEdName.getText().toString();
-        loginPojo.password = getIntent().getStringExtra(Constants.EXTRA_PASSWORD);
-        loginPojo.photo = mUserPhoto;
-        retrofitRestApiProvider.registerUsers(mCallback, loginPojo);
+        if (false == TextUtils.isEmpty(mEdName.getText().toString())) {
+            RetrofitRestApiProvider retrofitRestApiProvider = new RetrofitRestApiProvider(UserPhotoActivity.this, Constants.DOMAIN_API);
+            LoginPojo loginPojo = new LoginPojo();
+            loginPojo.email = getIntent().getStringExtra(Constants.EXTRA_EMAIL);
+            loginPojo.mobile = getIntent().getStringExtra(Constants.EXTRA_MOBILE);
+            loginPojo.name = mEdName.getText().toString();
+            loginPojo.password = getIntent().getStringExtra(Constants.EXTRA_PASSWORD);
+            loginPojo.photo = mUserPhoto;
+            retrofitRestApiProvider.registerUsers(mCallback, loginPojo);
+        } else {
+            Toast.makeText(UserPhotoActivity.this, R.string.please_enter_valid_name, Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 
@@ -89,6 +102,7 @@ public class UserPhotoActivity extends AppCompatActivity implements EasyPermissi
         ButterKnife.bind(UserPhotoActivity.this);
         getSupportActionBar().setTitle(Html.fromHtml(getString(R.string.photo_activity_title)));
         mCustomSharedPref = new CustomSharedPreferance(UserPhotoActivity.this);
+        EasyPermissions.requestPermissions(this, getString(R.string.read_file), READ_REQUEST_CODE, Manifest.permission.READ_EXTERNAL_STORAGE);
     }
 
 
@@ -98,9 +112,12 @@ public class UserPhotoActivity extends AppCompatActivity implements EasyPermissi
             GenericSuccessResponseDto genericSuccessResponseDto = response.body();
             if (genericSuccessResponseDto != null && genericSuccessResponseDto.getResult() != null) {
                 mCustomSharedPref.addString(Constants.SHARED_PREF_USER_ID, genericSuccessResponseDto.getResult());
+                mCustomSharedPref.addString(Constants.SHARED_PREF_IS_USER_LOGIN,"true");
                 Intent dashbaordActivity = new Intent(UserPhotoActivity
                         .this, DashboardActivity.class);
+                dashbaordActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(dashbaordActivity);
+                finish();
             }
 
         }
@@ -118,7 +135,8 @@ public class UserPhotoActivity extends AppCompatActivity implements EasyPermissi
             uri = data.getData();
             if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 String filePath = getRealPathFromURIPath(uri, UserPhotoActivity.this);
-                File file = new File(filePath);
+                final File file = new File(filePath);
+
                 Log.d(TAG, "Filename " + file.getName());
                 //RequestBody mFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 RequestBody mFile = RequestBody.create(MediaType.parse("image/*"), file);
@@ -136,6 +154,7 @@ public class UserPhotoActivity extends AppCompatActivity implements EasyPermissi
                         UploadObject uploadObject = response.body();
                         if (uploadObject != null && uploadObject.getStatus() != null && uploadObject.getStatus().equals("true")) {
                             Toast.makeText(UserPhotoActivity.this, "Profile pic uploaded", Toast.LENGTH_LONG).show();
+                            Picasso.with(UserPhotoActivity.this).load(file).transform(new CircleTransform()).into(ivProfilePic);
                             mUserPhoto = uploadObject.getFile_path();
                         } else {
                             Toast.makeText(UserPhotoActivity.this, "Failed to update profile pic", Toast.LENGTH_LONG).show();
@@ -154,7 +173,7 @@ public class UserPhotoActivity extends AppCompatActivity implements EasyPermissi
             } else {
                 EasyPermissions.requestPermissions(this, getString(R.string.read_file), READ_REQUEST_CODE, Manifest.permission.READ_EXTERNAL_STORAGE);
             }
-        }else{
+        } else {
             pgProgressBar.setVisibility(View.GONE);
         }
     }

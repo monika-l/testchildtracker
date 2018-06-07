@@ -17,6 +17,8 @@ public class Constants {
 
 
     public static final String SHARED_PREF_USER_ID = "shared_pref_user_id";
+    public static final String SHARED_PREF_USER_PASSWORD = "shared_pref_user_password";
+    public static final String SHARED_PREF_IS_USER_LOGIN = "shared_pref_is_user_login";
     public static final String SHARED_PREF_ALL_NOTFICATION = "shared_pref_all_notifications";
     public static final String SHARED_PREF_PHONE = "shared_pref_phone";
     public static final String SHARED_PREF_ALL_MEMBERS = "shared_pref_all_members";

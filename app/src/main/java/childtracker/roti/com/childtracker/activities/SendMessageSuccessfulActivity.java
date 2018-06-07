@@ -14,7 +14,9 @@ public class SendMessageSuccessfulActivity extends AppCompatActivity {
     @OnClick(R.id.btOk)
     public void onNext() {
         Intent activity = new Intent(SendMessageSuccessfulActivity.this, DashboardActivity.class);
+        activity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(activity);
+        finish();
     }
 
 

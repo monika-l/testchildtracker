@@ -50,6 +50,7 @@ public class SendMessageToCommunityActivity extends AppCompatActivity {
                 public void run() {
                     Intent activity = new Intent(SendMessageToCommunityActivity.this, SendMessageSuccessfulActivity.class);
                     startActivity(activity);
+                    finish();
                 }
             }, 2500);
         }

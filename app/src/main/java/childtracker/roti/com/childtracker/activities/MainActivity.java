@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,8 +34,13 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.btNext)
     public void onNext() {
-        pgProgressBar.setVisibility(View.VISIBLE);
-        mRetrofitRestApiProvider.loginUser(mCallback, mEdPhone.getText().toString());
+        String phoneInput = mEdPhone.getText().toString();
+        if (false == TextUtils.isEmpty(phoneInput) && phoneInput.length() != 10) {
+            pgProgressBar.setVisibility(View.VISIBLE);
+            mRetrofitRestApiProvider.loginUser(mCallback, mEdPhone.getText().toString());
+        } else {
+            Toast.makeText(MainActivity.this, R.string.please_enter_10_digit_no, Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -52,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (mCustomSharedPref.getString(Constants.SHARED_PREF_USER_ID) != null) {
+        if (mCustomSharedPref.getString(Constants.SHARED_PREF_IS_USER_LOGIN) != null) {
             Intent siginActivity = new Intent(MainActivity.this, DashboardActivity.class);
             startActivity(siginActivity);
             finish();
@@ -64,15 +71,15 @@ public class MainActivity extends AppCompatActivity {
         public void onResponse(Call<LoginResponseDto> call, Response<LoginResponseDto> response) {
             pgProgressBar.setVisibility(View.GONE);
             LoginResponseDto loginResponseDto = response.body();
-            mCustomSharedPref.addString(Constants.SHARED_PREF_PHONE,  mEdPhone.getText().toString());
+            mCustomSharedPref.addString(Constants.SHARED_PREF_PHONE, mEdPhone.getText().toString());
             if (loginResponseDto != null && loginResponseDto.getUserId() != null && Integer.parseInt(loginResponseDto.getUserId()) > 0) {
                 // user is existing user take to dashbaord
-                Intent siginActivity = new Intent(MainActivity.this, DashboardActivity.class);
+                Intent siginActivity = new Intent(MainActivity.this, UserPasswordActivity.class);
+                siginActivity.putExtra(Constants.EXTRA_PASSWORD, loginResponseDto.getPassword());
                 mCustomSharedPref.addString(Constants.SHARED_PREF_USER_ID, loginResponseDto.getUserId());
-
+                mCustomSharedPref.addString(Constants.SHARED_PREF_USER_PASSWORD, loginResponseDto.getPassword());
                 mCustomSharedPref.addString(Constants.SHARED_PREF_ALL_MEMBERS, ChildTrackerUtils.convertObjectToJson(loginResponseDto.getMembers()));
                 startActivity(siginActivity);
-                finish();
             } else {
                 // user is new user redirect for futher information
                 Intent siginActivity = new Intent(MainActivity.this, UserPasswordActivity.class);

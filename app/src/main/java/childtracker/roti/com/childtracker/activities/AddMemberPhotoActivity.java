@@ -12,8 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.List;
@@ -29,6 +32,7 @@ import childtracker.roti.com.childtracker.interfaces.UploadImageInterface;
 import childtracker.roti.com.childtracker.retrofit.RetrofitRestApiProvider;
 import childtracker.roti.com.childtracker.retrofit.UploadObject;
 import childtracker.roti.com.childtracker.utils.ChildTrackerUtils;
+import childtracker.roti.com.childtracker.utils.CircleTransform;
 import childtracker.roti.com.childtracker.utils.Constants;
 import childtracker.roti.com.childtracker.utils.CustomSharedPreferance;
 import okhttp3.MediaType;
@@ -49,6 +53,9 @@ public class AddMemberPhotoActivity extends AppCompatActivity implements EasyPer
     private static final int READ_REQUEST_CODE = 300;
     private Uri uri;
     private String mUserPhoto = "";
+
+    @BindView(R.id.ivProfilePic)
+    ImageView ivProfilePic;
 
     @BindView(R.id.pgProgressBar)
     ProgressBar pgProgressBar;
@@ -71,6 +78,7 @@ public class AddMemberPhotoActivity extends AppCompatActivity implements EasyPer
 
     @OnClick(R.id.btNext)
     public void onNext() {
+
         RetrofitRestApiProvider retrofitRestApiProvider = new RetrofitRestApiProvider(AddMemberPhotoActivity.this, Constants.DOMAIN_API);
         MembersPojo membersPojo = new MembersPojo();
         membersPojo.address = getIntent().getStringExtra(Constants.EXTRA_ADDRESS);
@@ -94,6 +102,7 @@ public class AddMemberPhotoActivity extends AppCompatActivity implements EasyPer
         ButterKnife.bind(AddMemberPhotoActivity.this);
         getSupportActionBar().setTitle(Html.fromHtml(getString(R.string.photo_activity_title)));
         mCustomSharedPref = new CustomSharedPreferance(AddMemberPhotoActivity.this);
+        EasyPermissions.requestPermissions(this, getString(R.string.read_file), READ_REQUEST_CODE, Manifest.permission.READ_EXTERNAL_STORAGE);
     }
 
 
@@ -124,9 +133,10 @@ public class AddMemberPhotoActivity extends AppCompatActivity implements EasyPer
             LoginResponseDto loginResponseDto = response.body();
             if (loginResponseDto != null && loginResponseDto.getUserId() != null && Integer.parseInt(loginResponseDto.getUserId()) > 0) {
                 // user is existing user take to dashbaord
-                Intent siginActivity = new Intent(AddMemberPhotoActivity.this, DashboardActivity.class);
                 mCustomSharedPref.addString(Constants.SHARED_PREF_USER_ID, loginResponseDto.getUserId());
                 mCustomSharedPref.addString(Constants.SHARED_PREF_ALL_MEMBERS, ChildTrackerUtils.convertObjectToJson(loginResponseDto.getMembers()));
+                Intent siginActivity = new Intent(AddMemberPhotoActivity.this, DashboardActivity.class);
+                siginActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(siginActivity);
                 finish();
             }
@@ -146,7 +156,7 @@ public class AddMemberPhotoActivity extends AppCompatActivity implements EasyPer
             uri = data.getData();
             if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 String filePath = getRealPathFromURIPath(uri, AddMemberPhotoActivity.this);
-                File file = new File(filePath);
+                final File file = new File(filePath);
                 Log.d(TAG, "Filename " + file.getName());
                 //RequestBody mFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 RequestBody mFile = RequestBody.create(MediaType.parse("image/*"), file);
@@ -165,6 +175,7 @@ public class AddMemberPhotoActivity extends AppCompatActivity implements EasyPer
                         UploadObject uploadObject = response.body();
                         if (uploadObject != null && uploadObject.getStatus() != null && uploadObject.getStatus().equals("true")) {
                             Toast.makeText(AddMemberPhotoActivity.this, "Profile pic uploaded", Toast.LENGTH_LONG).show();
+                            Picasso.with(AddMemberPhotoActivity.this).load(file).transform(new CircleTransform()).into(ivProfilePic);
                             mUserPhoto = uploadObject.getFile_path();
                         } else {
                             Toast.makeText(AddMemberPhotoActivity.this, "Failed to update profile pic", Toast.LENGTH_LONG).show();

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.TextUtils;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,10 +22,15 @@ public class AddMemberAddressActivity extends AppCompatActivity {
 
     @OnClick(R.id.btNext)
     public void onNext() {
-        Intent activity = new Intent(AddMemberAddressActivity.this, AddMemberCommentActivity.class);
-        activity.putExtra(Constants.EXTRA_ADDRESS,tvAddress.getText().toString());
-        activity.putExtras(getIntent());
-        startActivity(activity);
+        if (false == TextUtils.isEmpty(tvAddress.getText().toString())) {
+            Intent activity = new Intent(AddMemberAddressActivity.this, AddMemberCommentActivity.class);
+            activity.putExtra(Constants.EXTRA_ADDRESS, tvAddress.getText().toString());
+            activity.putExtras(getIntent());
+            startActivity(activity);
+        } else {
+            Toast.makeText(AddMemberAddressActivity.this, "Please enter valid address", Toast.LENGTH_LONG).show();
+        }
+
     }
 
 
