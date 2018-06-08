@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:name=".activities.ChildTrackerApplication"
@@ -41,12 +43,18 @@
         <activity android:name=".activities.SendMessageToCommunityActivity"></activity>
 
         <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="14c41ec566647ccd863405bef5f09fbb971df17e"
+            />
+
+        <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA1oMybxi-DInQr4MP4I8Tb1cSeZog4wW8" />
+            android:value="AIzaSyB8gvmHA_wyWULpNCzOfHYlK5LMj2a1AGE" />
 
         <!--Service for extending one singal notifications api-->
         <service
             android:name=".service.OneSignalNotificationExtender"
+            android:permission="android.permission.BIND_JOB_SERVICE"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.onesignal.NotificationExtender" />

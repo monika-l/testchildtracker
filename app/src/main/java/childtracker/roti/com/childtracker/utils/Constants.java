@@ -22,6 +22,7 @@ public class Constants {
     public static final String SHARED_PREF_ALL_NOTFICATION = "shared_pref_all_notifications";
     public static final String SHARED_PREF_PHONE = "shared_pref_phone";
     public static final String SHARED_PREF_ALL_MEMBERS = "shared_pref_all_members";
+    public static final String SHAREDPREF_PLAYER_ID = "shared_pref_id";
 
     public static final String DOMAIN_API = "http://52.91.166.193";
 
@@ -38,11 +39,17 @@ public class Constants {
 
     public static final String BROADCAST_MESSAGE_API = "/Webservices/ChildTracker/OneSignalToAll.php";
     public static final String BROADCAST_MESSAGE_API_MESSAGE = "message";
+    public static final String BROADCAST_MESSAGE_API_MOBILE = "mobileNumber";
+    public static final String BROADCAST_MESSAGE_API_MEMBER = "memberId";
+    public static final String BROADCAST_MESSAGE_API_TOKEN = "notificationToken";
 
-
+    public static final String REPLY_TO_USER_API = "/Webservices/ChildTracker/ReplyTheNotification.php";
+    public static final String REPLY_TO_USER_API_MEMBER_ID = "memberId";
+    public static final String REPLY_TO_USER_API_MESAGE = "message";
 
     public static final String LOGIN_API = "/Webservices/ChildTracker/LoginExistingUser.php";
     public static final String LOGIN_API_MOBILE_NO = "mobileNumber";
+    public static final String LOGIN_API_NOTIFICATION_TOKEN = "notificationToken";
 
     public static final String REGISTER_API = "/Webservices/ChildTracker/LoginNewUser.php";
     public static final String REGISTER_API_NAME = "name";
@@ -50,6 +57,7 @@ public class Constants {
     public static final String REGISTER_API_EMAIL = "email";
     public static final String REGISTER_API_PHOTO = "photo";
     public static final String REGISTER_API_PASSWORD = "password";
+    public static final String REGISTER_API_NOTIFICATION_TOKEN = "notificationToken";
 
 
     public static final String CREATE_LOGIN_API = "http://54.186.94.218";
@@ -60,7 +68,6 @@ public class Constants {
 
     public static final String BROADCAST_MESSAGE_TO_COMMUNITY_API = "http://54.186.94.218";
 
-    public static final String REPLY_TO_USER_API = "http://54.186.94.218";
 
 
 }

@@ -16,7 +16,8 @@ public interface IRegisterNewUser {
                      @Field(Constants.REGISTER_API_MOBILE) String mobile,
                     @Field(Constants.REGISTER_API_EMAIL) String email,
                     @Field(Constants.REGISTER_API_PHOTO) String photo,
-                    @Field(Constants.REGISTER_API_PASSWORD) String password
+                    @Field(Constants.REGISTER_API_PASSWORD) String password,
+                    @Field(Constants.REGISTER_API_NOTIFICATION_TOKEN) String notificationToken
 
     );
 }

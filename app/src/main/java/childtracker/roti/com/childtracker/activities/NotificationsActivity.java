@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import childtracker.roti.com.childtracker.R;
 import childtracker.roti.com.childtracker.adapter.NotificationAdapter;
+import childtracker.roti.com.childtracker.dto.NotificationDisplayDto;
 import childtracker.roti.com.childtracker.utils.ChildTrackerUtils;
 import childtracker.roti.com.childtracker.utils.Constants;
 import childtracker.roti.com.childtracker.utils.CustomSharedPreferance;
@@ -25,7 +26,7 @@ public class NotificationsActivity extends AppCompatActivity {
 
    // private ArrayList<NotificationsDto.NotificationsMetaData> memberDtos = new ArrayList<NotificationsDto.NotificationsMetaData>();
 
-    ArrayList<String> allNotifications = new ArrayList<String>();
+    ArrayList<NotificationDisplayDto> allNotifications = new ArrayList<NotificationDisplayDto>();
     @BindView(R.id.rvNotification)
     RecyclerView rvMembersList;
 
@@ -38,7 +39,7 @@ public class NotificationsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(Html.fromHtml(getString(R.string.notify_activity_title)));
         prepareData();
 
-        NotificationAdapter adapter = new NotificationAdapter(allNotifications);
+        NotificationAdapter adapter = new NotificationAdapter(NotificationsActivity.this ,allNotifications);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         rvMembersList.setLayoutManager(mLayoutManager);
         rvMembersList.setItemAnimator(new DefaultItemAnimator());
@@ -49,8 +50,8 @@ public class NotificationsActivity extends AppCompatActivity {
 
     {
         CustomSharedPreferance customSharedPreferance = new CustomSharedPreferance(this);
-        Type listType = new TypeToken<ArrayList<String>>() {
+        Type listType = new TypeToken<ArrayList<NotificationDisplayDto>>() {
         }.getType();
-        allNotifications = (ArrayList<String>) ChildTrackerUtils.convertJsonToObject(customSharedPreferance.getString(Constants.SHARED_PREF_ALL_NOTFICATION), listType);
+        allNotifications = (ArrayList<NotificationDisplayDto>) ChildTrackerUtils.convertJsonToObject(customSharedPreferance.getString(Constants.SHARED_PREF_ALL_NOTFICATION), listType);
     }
 }

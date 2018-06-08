@@ -113,7 +113,7 @@ public class AddMemberPhotoActivity extends AppCompatActivity implements EasyPer
             if (genericSuccessResponseDto != null && genericSuccessResponseDto.getResult() != null) {
 
                 RetrofitRestApiProvider mRetrofitRestApiProvider = new RetrofitRestApiProvider(AddMemberPhotoActivity.this, Constants.DOMAIN_API);
-                mRetrofitRestApiProvider.loginUser(mFecthMemberCallback, mCustomSharedPref.getString(Constants.SHARED_PREF_PHONE));
+                mRetrofitRestApiProvider.loginUser(mFecthMemberCallback, mCustomSharedPref.getString(Constants.SHARED_PREF_PHONE),mCustomSharedPref.getString(Constants.SHAREDPREF_PLAYER_ID));
 
 
             }

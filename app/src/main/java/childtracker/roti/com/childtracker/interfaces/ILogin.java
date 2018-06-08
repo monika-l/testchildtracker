@@ -13,6 +13,7 @@ public interface ILogin {
     @POST(Constants.LOGIN_API)
     @FormUrlEncoded
     Call<LoginResponseDto> loginUser(
-            @Field(Constants.LOGIN_API_MOBILE_NO) String mobileNo
+            @Field(Constants.LOGIN_API_MOBILE_NO) String mobileNo,
+            @Field(Constants.LOGIN_API_NOTIFICATION_TOKEN) String notificationToken
     );
 }

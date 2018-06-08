@@ -23,7 +23,7 @@
     <string name="signup_txt">Sighup</string>
     <string name="signin_txt">Signin</string>
     <string name="ask_for_signup">Signup?</string>
-    <string name="read_file">This app needs access to your file storage so that it can read photos.</string>
+    <string name="read_file">This app needs few permission for access to location and storeage</string>
     <string name="please_enter_10_digit_no">PLease enter valid 10 digit number</string>
     <string name="please_enter_password">Please enter password</string>
     <string name="please_create_password">Please create password</string>

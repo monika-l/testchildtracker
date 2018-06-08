@@ -7,6 +7,7 @@ public class LoginPojo {
     public String mobile;
     public String email;
     public String password;
+    public String notificationToken;
 
 
 }

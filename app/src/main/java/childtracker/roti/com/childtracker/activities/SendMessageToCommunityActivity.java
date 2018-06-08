@@ -12,6 +12,7 @@ import childtracker.roti.com.childtracker.dto.LoginResponseDto;
 import childtracker.roti.com.childtracker.retrofit.RetrofitRestApiProvider;
 import childtracker.roti.com.childtracker.utils.ChildTrackerUtils;
 import childtracker.roti.com.childtracker.utils.Constants;
+import childtracker.roti.com.childtracker.utils.CustomSharedPreferance;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,7 +27,7 @@ public class SendMessageToCommunityActivity extends AppCompatActivity {
         ButterKnife.bind(SendMessageToCommunityActivity.this);
         getSupportActionBar().setTitle(Html.fromHtml(getString(R.string.sending_message)));
         LoginResponseDto.UserMembers memberInfo = (LoginResponseDto.UserMembers) ChildTrackerUtils.convertJsonToObject(getIntent().getStringExtra(Constants.EXTRA_MEMBER_DETAILS), LoginResponseDto.UserMembers.class);
-
+        CustomSharedPreferance customSharedPreferance = new CustomSharedPreferance(SendMessageToCommunityActivity.this);
         String message = "Message from community : " + memberInfo.getComment() + "\n\n" +
                 "Childname : " + memberInfo.getChildName() + "\n" +
                 "Age : " + memberInfo.getAge() + "\n" +
@@ -36,7 +37,7 @@ public class SendMessageToCommunityActivity extends AppCompatActivity {
                 "Address : " + memberInfo.getAddress() + "\n";
 
         RetrofitRestApiProvider retrofitRestApiProvider = new RetrofitRestApiProvider(SendMessageToCommunityActivity.this, Constants.DOMAIN_API);
-        retrofitRestApiProvider.sendMessageToCommunity(mCallback, message);
+        retrofitRestApiProvider.sendMessageToCommunity(mCallback, message,customSharedPreferance.getString(Constants.SHARED_PREF_PHONE),customSharedPreferance.getString(Constants.SHAREDPREF_PLAYER_ID),String.valueOf(memberInfo.getId()));
 
 
     }

@@ -87,6 +87,7 @@ public class UserPhotoActivity extends AppCompatActivity implements EasyPermissi
             loginPojo.name = mEdName.getText().toString();
             loginPojo.password = getIntent().getStringExtra(Constants.EXTRA_PASSWORD);
             loginPojo.photo = mUserPhoto;
+            loginPojo.notificationToken = mCustomSharedPref.getString(Constants.SHAREDPREF_PLAYER_ID);
             retrofitRestApiProvider.registerUsers(mCallback, loginPojo);
         } else {
             Toast.makeText(UserPhotoActivity.this, R.string.please_enter_valid_name, Toast.LENGTH_SHORT).show();
@@ -112,7 +113,7 @@ public class UserPhotoActivity extends AppCompatActivity implements EasyPermissi
             GenericSuccessResponseDto genericSuccessResponseDto = response.body();
             if (genericSuccessResponseDto != null && genericSuccessResponseDto.getResult() != null) {
                 mCustomSharedPref.addString(Constants.SHARED_PREF_USER_ID, genericSuccessResponseDto.getResult());
-                mCustomSharedPref.addString(Constants.SHARED_PREF_IS_USER_LOGIN,"true");
+                mCustomSharedPref.addString(Constants.SHARED_PREF_IS_USER_LOGIN, "true");
                 Intent dashbaordActivity = new Intent(UserPhotoActivity
                         .this, DashboardActivity.class);
                 dashbaordActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);

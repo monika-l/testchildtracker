@@ -27,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
     private RetrofitRestApiProvider mRetrofitRestApiProvider;
     private CustomSharedPreferance mCustomSharedPref;
+    private static final int READ_REQUEST_CODE = 300;
+
     @BindView(R.id.phone_number_edt)
     AppCompatEditText mEdPhone;
     @BindView(R.id.pgProgressBar)
@@ -35,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.btNext)
     public void onNext() {
         String phoneInput = mEdPhone.getText().toString();
-        if (false == TextUtils.isEmpty(phoneInput) && phoneInput.length() != 10) {
+        if (false == TextUtils.isEmpty(phoneInput) && phoneInput.length() == 10) {
             pgProgressBar.setVisibility(View.VISIBLE);
-            mRetrofitRestApiProvider.loginUser(mCallback, mEdPhone.getText().toString());
+            mRetrofitRestApiProvider.loginUser(mCallback, mEdPhone.getText().toString(), mCustomSharedPref.getString(Constants.SHAREDPREF_PLAYER_ID));
         } else {
             Toast.makeText(MainActivity.this, R.string.please_enter_10_digit_no, Toast.LENGTH_SHORT).show();
         }
@@ -54,17 +56,22 @@ public class MainActivity extends AppCompatActivity {
         mRetrofitRestApiProvider = new RetrofitRestApiProvider(MainActivity.this
                 , Constants.DOMAIN_API);
 
+
     }
+
 
     @Override
     protected void onResume() {
         super.onResume();
+
         if (mCustomSharedPref.getString(Constants.SHARED_PREF_IS_USER_LOGIN) != null) {
             Intent siginActivity = new Intent(MainActivity.this, DashboardActivity.class);
             startActivity(siginActivity);
             finish();
         }
+
     }
+
 
     retrofit2.Callback mCallback = new Callback<LoginResponseDto>() {
         @Override
