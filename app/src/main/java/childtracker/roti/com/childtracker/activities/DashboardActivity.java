@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -56,14 +57,15 @@ import childtracker.roti.com.childtracker.utils.CircleTransform;
 import childtracker.roti.com.childtracker.utils.Constants;
 import childtracker.roti.com.childtracker.utils.CustomSharedPreferance;
 
-public class DashboardActivity  extends AppCompatActivity implements OnMapReadyCallback,GoogleApiClient.ConnectionCallbacks,
+public class DashboardActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
-     private Location mylocation;
+    private Location mylocation;
     private GoogleMap mMap;
     private GoogleApiClient googleApiClient;
-    private final static int REQUEST_CHECK_SETTINGS_GPS=0x1;
-    private final static int REQUEST_ID_MULTIPLE_PERMISSIONS=0x2;
+    private final static int REQUEST_CHECK_SETTINGS_GPS = 0x1;
+    private final static int REQUEST_ID_MULTIPLE_PERMISSIONS = 0x2;
+    private String TAG = DashboardActivity.class.getSimpleName();
 
     private CustomSharedPreferance mCustomSharedPref;
     @BindView(R.id.sliding_layout)
@@ -89,7 +91,6 @@ public class DashboardActivity  extends AppCompatActivity implements OnMapReadyC
         Intent siginActivity = new Intent(DashboardActivity.this, AddMemberActivity.class);
         startActivity(siginActivity);
     }
-
 
 
     @Override
@@ -132,7 +133,9 @@ public class DashboardActivity  extends AppCompatActivity implements OnMapReadyC
                     }
                 });
                 if (members.get(position).getPhoto() != null && TextUtils.isEmpty(members.get(position).getPhoto()) == false) {
-                    Picasso.with(DashboardActivity.this).load("http://52.91.166.193/Webservices/ChildTracker/" + members.get(position).getPhoto()).transform(new CircleTransform()).into(userImage);
+                    String[] allPhotos = members.get(position).getPhoto().split(",");
+                    Log.d(TAG,members.get(position).getPhoto());
+                    Picasso.with(DashboardActivity.this).load("http://52.91.166.193/Webservices/ChildTracker/" +allPhotos[0]).transform(new CircleTransform()).into(userImage);
                 } else {
                     Picasso.with(DashboardActivity.this).load(R.mipmap.ic_user).transform(new CircleTransform()).into(userImage);
                 }
@@ -146,7 +149,6 @@ public class DashboardActivity  extends AppCompatActivity implements OnMapReadyC
 
 
     }
-
 
 
     @Override
@@ -184,7 +186,7 @@ public class DashboardActivity  extends AppCompatActivity implements OnMapReadyC
 
             //Adding the created the marker on the map
             mMap.addMarker(markerOptions);
-            LatLng  mLocationDestination = new LatLng((location.getLatitude()), (location.getLongitude()));
+            LatLng mLocationDestination = new LatLng((location.getLatitude()), (location.getLongitude()));
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(mLocationDestination).zoom(11f).tilt(70).build();
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
@@ -194,11 +196,11 @@ public class DashboardActivity  extends AppCompatActivity implements OnMapReadyC
             //Or Do whatever you want with your location
         }
     }
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
     }
-
 
 
     @Override
@@ -217,13 +219,13 @@ public class DashboardActivity  extends AppCompatActivity implements OnMapReadyC
         //You can display a message here
     }
 
-    private void getMyLocation(){
-        if(googleApiClient!=null) {
+    private void getMyLocation() {
+        if (googleApiClient != null) {
             if (googleApiClient.isConnected()) {
                 int permissionLocation = ContextCompat.checkSelfPermission(DashboardActivity.this,
                         Manifest.permission.ACCESS_FINE_LOCATION);
                 if (permissionLocation == PackageManager.PERMISSION_GRANTED) {
-                    mylocation =                     LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+                    mylocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
                     LocationRequest locationRequest = new LocationRequest();
                     locationRequest.setInterval(3000);
                     locationRequest.setFastestInterval(3000);
@@ -297,7 +299,7 @@ public class DashboardActivity  extends AppCompatActivity implements OnMapReadyC
         }
     }
 
-    private void checkPermissions(){
+    private void checkPermissions() {
         int permissionLocation = ContextCompat.checkSelfPermission(DashboardActivity.this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION);
         List<String> listPermissionsNeeded = new ArrayList<>();
@@ -307,7 +309,7 @@ public class DashboardActivity  extends AppCompatActivity implements OnMapReadyC
                 ActivityCompat.requestPermissions(this,
                         listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), REQUEST_ID_MULTIPLE_PERMISSIONS);
             }
-        }else{
+        } else {
             getMyLocation();
         }
 

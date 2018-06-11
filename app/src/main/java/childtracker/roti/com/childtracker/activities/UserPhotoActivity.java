@@ -116,7 +116,7 @@ public class UserPhotoActivity extends AppCompatActivity implements EasyPermissi
                 mCustomSharedPref.addString(Constants.SHARED_PREF_IS_USER_LOGIN, "true");
                 Intent dashbaordActivity = new Intent(UserPhotoActivity
                         .this, DashboardActivity.class);
-                dashbaordActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                dashbaordActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(dashbaordActivity);
                 finish();
             }

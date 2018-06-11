@@ -8,13 +8,13 @@
 
 
     <FrameLayout
+        android:id="@+id/llPhoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/llPhoto"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/margin_16"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="left">
+        android:layout_gravity="left"
+        android:layout_marginTop="@dimen/margin_16">
 
         <ImageView
             android:id="@+id/ivProfilePic"
@@ -31,13 +31,40 @@
             android:layout_margin="@dimen/margin_16"
             android:src="@mipmap/ic_edit_icon" />
     </FrameLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_below="@+id/llPhoto"
-        android:text="Add Photo"
-        android:gravity="center_horizontal"
-        android:layout_height="wrap_content" />
 
+    <TextView
+        android:id="@+id/tvAddPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llPhoto"
+        android:gravity="center_horizontal"
+        android:text="Add Photo" />
+
+    <TextView
+        android:id="@+id/tvAddMore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/tvAddPhoto"
+        android:layout_margin="@dimen/margin_8"
+        android:text="Add More"
+        android:textColor="@color/blue" />
+
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvAddMore">
+
+        <LinearLayout
+            android:id="@+id/llAddMorePhotos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
 
 
     <Button
@@ -51,11 +78,11 @@
         android:textSize="@dimen/font_22" />
 
     <ProgressBar
-        android:layout_width="wrap_content"
         android:id="@+id/pgProgressBar"
-        android:visibility="invisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:indeterminateTint="@color/blue"
-        android:layout_height="wrap_content" />
+        android:visibility="invisible" />
 
 </RelativeLayout>

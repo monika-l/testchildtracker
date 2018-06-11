@@ -9,13 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import childtracker.roti.com.childtracker.R;
 import childtracker.roti.com.childtracker.dto.NotificationDisplayDto;
 import childtracker.roti.com.childtracker.retrofit.RetrofitRestApiProvider;
+import childtracker.roti.com.childtracker.utils.CircleTransform;
 import childtracker.roti.com.childtracker.utils.Constants;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,12 +33,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tvMessage, tvReply, tvAddress;
-
+public ImageView ivUserImage;
         public MyViewHolder(View view) {
             super(view);
             tvMessage = (TextView) view.findViewById(R.id.tvMessage);
             tvReply = (TextView) view.findViewById(R.id.tvReply);
-
+            ivUserImage = (ImageView) view.findViewById(R.id.ivUserImage);
         }
     }
 
@@ -54,10 +58,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
-//        NotificationsDto.NotificationsMetaData member = mMemberMetaData.get(position);
-//        holder.tvName.setText(member.getMemberName());
-//        holder.tvMobile.setText(member.getMemberPhoneNo());
-//        holder.tvAddress.setText(member.getMemberMessage());
+
         holder.tvMessage.setText(mMemberMetaData.get(position).getMessage());
 
         if (mMemberMetaData.get(position).getMessage().contains("Message from community")) {
@@ -89,6 +90,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
             }
         });
+
+        if(mMemberMetaData.get(position).getImages()!=null && mMemberMetaData.get(position).getImages().length()>0){
+            String[] allImages = mMemberMetaData.get(position).getImages().split(",");
+            Picasso.with(mContext).load("http://52.91.166.193/Webservices/ChildTracker/"+allImages[0]).transform(new CircleTransform()).into(holder.ivUserImage);
+        }
     }
 
     retrofit2.Callback mCallback = new Callback() {

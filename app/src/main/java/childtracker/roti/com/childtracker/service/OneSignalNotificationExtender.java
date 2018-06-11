@@ -11,7 +11,9 @@ import com.google.gson.reflect.TypeToken;
 import com.onesignal.NotificationExtenderService;
 import com.onesignal.OSNotificationReceivedResult;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -40,19 +42,27 @@ public class OneSignalNotificationExtender extends NotificationExtenderService {
     @Override
     protected boolean onNotificationProcessing(final OSNotificationReceivedResult notification) {
         try {
-        CustomSharedPreferance mSharedPref = new CustomSharedPreferance(this);
-        Log.d("noti = >>>>>>>", ChildTrackerUtils.convertObjectToJson(notification));
-        Log.d("noti = >>>>>>>", notification.payload.body);
-        CustomSharedPreferance customSharedPreferance = new CustomSharedPreferance(this);
-        Type listType = new TypeToken<ArrayList<NotificationDisplayDto>>() {
-        }.getType();
-        ArrayList<NotificationDisplayDto> allNotifications = (ArrayList<NotificationDisplayDto>) ChildTrackerUtils.convertJsonToObject(customSharedPreferance.getString(Constants.SHARED_PREF_ALL_NOTFICATION), listType);
-        NotificationDisplayDto notificationDisplayDto = new NotificationDisplayDto();
-        notificationDisplayDto.setMessage(notification.payload.body);
-        notificationDisplayDto.setMemberId(notification.payload.additionalData.getString("memberId"));
-        allNotifications.add(notificationDisplayDto);
-        customSharedPreferance.addString(Constants.SHARED_PREF_ALL_NOTFICATION, ChildTrackerUtils.convertObjectToJson(allNotifications));
-        showNotification(ChildTrackerApplication.getContext(),"Child Tracker" , notification.payload.body,null );
+            CustomSharedPreferance mSharedPref = new CustomSharedPreferance(this);
+            Log.d("noti = >>>>>>>", ChildTrackerUtils.convertObjectToJson(notification));
+            Log.d("noti = >>>>>>>", notification.payload.body);
+            CustomSharedPreferance customSharedPreferance = new CustomSharedPreferance(this);
+            Type listType = new TypeToken<ArrayList<NotificationDisplayDto>>() {
+            }.getType();
+            ArrayList<NotificationDisplayDto> allNotifications = (ArrayList<NotificationDisplayDto>) ChildTrackerUtils.convertJsonToObject(customSharedPreferance.getString(Constants.SHARED_PREF_ALL_NOTFICATION), listType);
+            NotificationDisplayDto notificationDisplayDto = new NotificationDisplayDto();
+            Log.d(TAG, notification.payload.additionalData.toString());
+            String memberData = notification.payload.additionalData.getString("extra_data");
+            JSONObject jsonObj = new JSONObject(memberData);
+            JSONArray jsonArray = jsonObj.getJSONArray("memberInfo");
+            JSONObject memberDetails = (JSONObject) (jsonArray.get(0));
+            Log.d("noti = >>>>>>>", memberData);
+            Log.d("noti = >>>>>>>", memberDetails.getString("photo"));
+            notificationDisplayDto.setMessage(notification.payload.body);
+            notificationDisplayDto.setMemberId(jsonObj.getString("memberId"));
+            notificationDisplayDto.setImages(memberDetails.getString("photo"));
+            allNotifications.add(notificationDisplayDto);
+            customSharedPreferance.addString(Constants.SHARED_PREF_ALL_NOTFICATION, ChildTrackerUtils.convertObjectToJson(allNotifications));
+            showNotification(ChildTrackerApplication.getContext(), "Child Tracker", notification.payload.body, null);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -77,7 +87,6 @@ public class OneSignalNotificationExtender extends NotificationExtenderService {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
                 .setContentText(body);
-
 
 
         notificationManager.notify(notificationId, mBuilder.build());

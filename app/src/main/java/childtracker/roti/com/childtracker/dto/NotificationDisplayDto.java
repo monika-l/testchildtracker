@@ -6,6 +6,16 @@ public class NotificationDisplayDto {
     private String message;
     private String userId;
     private String memberId;
+    private String images;
+
+
+    public String getImages() {
+        return images;
+    }
+
+    public void setImages(String images) {
+        this.images = images;
+    }
 
     public String getMessage() {
         return message;

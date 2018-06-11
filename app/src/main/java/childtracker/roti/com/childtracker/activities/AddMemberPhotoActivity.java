@@ -10,15 +10,20 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -49,7 +54,9 @@ public class AddMemberPhotoActivity extends AppCompatActivity implements EasyPer
 
 
     private static final String TAG = AddMemberPhotoActivity.class.getSimpleName();
+    private ArrayList<String> addMoreImages = new ArrayList<String>();
     private static final int REQUEST_GALLERY_CODE = 200;
+    private static final int REQUEST_ADDMORE_GALLERY_CODE = 400;
     private static final int READ_REQUEST_CODE = 300;
     private Uri uri;
     private String mUserPhoto = "";
@@ -57,8 +64,20 @@ public class AddMemberPhotoActivity extends AppCompatActivity implements EasyPer
     @BindView(R.id.ivProfilePic)
     ImageView ivProfilePic;
 
+    @BindView(R.id.llAddMorePhotos)
+    LinearLayout llAddMorePhotos;
+
     @BindView(R.id.pgProgressBar)
     ProgressBar pgProgressBar;
+
+    @OnClick(R.id.tvAddMore)
+    public void onAddMoreClick() {
+
+        Intent openGalleryIntent = new Intent(Intent.ACTION_PICK);
+        openGalleryIntent.setType("image/*");
+        startActivityForResult(openGalleryIntent, REQUEST_ADDMORE_GALLERY_CODE);
+    }
+
 
     @OnClick(R.id.llPhoto)
     public void onProfileClick() {
@@ -79,6 +98,11 @@ public class AddMemberPhotoActivity extends AppCompatActivity implements EasyPer
     @OnClick(R.id.btNext)
     public void onNext() {
 
+        ArrayList<String> allChildImages = addMoreImages;
+        if (false != TextUtils.isEmpty(mUserPhoto)) {
+            allChildImages.add(mUserPhoto);
+        }
+
         RetrofitRestApiProvider retrofitRestApiProvider = new RetrofitRestApiProvider(AddMemberPhotoActivity.this, Constants.DOMAIN_API);
         MembersPojo membersPojo = new MembersPojo();
         membersPojo.address = getIntent().getStringExtra(Constants.EXTRA_ADDRESS);
@@ -89,7 +113,7 @@ public class AddMemberPhotoActivity extends AppCompatActivity implements EasyPer
         membersPojo.memberName = getIntent().getStringExtra(Constants.EXTRA_NAME);
         membersPojo.motherName = getIntent().getStringExtra(Constants.EXTRA_MOTHER_NAME);
         membersPojo.userId = mCustomSharedPref.getString(Constants.SHARED_PREF_USER_ID);
-        membersPojo.photo = mUserPhoto;
+        membersPojo.photo = allChildImages.size() > 0 ? TextUtils.join(",", allChildImages) : mUserPhoto;
 
         retrofitRestApiProvider.addMembers(mCallback, membersPojo);
     }
@@ -113,7 +137,7 @@ public class AddMemberPhotoActivity extends AppCompatActivity implements EasyPer
             if (genericSuccessResponseDto != null && genericSuccessResponseDto.getResult() != null) {
 
                 RetrofitRestApiProvider mRetrofitRestApiProvider = new RetrofitRestApiProvider(AddMemberPhotoActivity.this, Constants.DOMAIN_API);
-                mRetrofitRestApiProvider.loginUser(mFecthMemberCallback, mCustomSharedPref.getString(Constants.SHARED_PREF_PHONE),mCustomSharedPref.getString(Constants.SHAREDPREF_PLAYER_ID));
+                mRetrofitRestApiProvider.loginUser(mFecthMemberCallback, mCustomSharedPref.getString(Constants.SHARED_PREF_PHONE), mCustomSharedPref.getString(Constants.SHAREDPREF_PLAYER_ID));
 
 
             }
@@ -195,6 +219,59 @@ public class AddMemberPhotoActivity extends AppCompatActivity implements EasyPer
                 EasyPermissions.requestPermissions(this, getString(R.string.read_file), READ_REQUEST_CODE, Manifest.permission.READ_EXTERNAL_STORAGE);
             }
         }
+        if (requestCode == REQUEST_ADDMORE_GALLERY_CODE && resultCode == Activity.RESULT_OK) {
+            uri = data.getData();
+            if (EasyPermissions.hasPermissions(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                String filePath = getRealPathFromURIPath(uri, AddMemberPhotoActivity.this);
+                final File file = new File(filePath);
+                Log.d(TAG, "Filename " + file.getName());
+                //RequestBody mFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                RequestBody mFile = RequestBody.create(MediaType.parse("image/*"), file);
+                MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("uploaded_file", file.getName(), mFile);
+                RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(Constants.DOMAIN_API)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                UploadImageInterface uploadImage = retrofit.create(UploadImageInterface.class);
+                Call<UploadObject> fileUpload = uploadImage.uploadFile(fileToUpload, filename);
+                pgProgressBar.setVisibility(View.VISIBLE);
+                fileUpload.enqueue(new Callback<UploadObject>() {
+                    @Override
+                    public void onResponse(Call<UploadObject> call, Response<UploadObject> response) {
+                        UploadObject uploadObject = response.body();
+                        if (uploadObject != null && uploadObject.getStatus() != null && uploadObject.getStatus().equals("true")) {
+                            Toast.makeText(AddMemberPhotoActivity.this, "Profile pic uploaded", Toast.LENGTH_LONG).show();
+                            LayoutInflater inflater = (LayoutInflater) AddMemberPhotoActivity.this.getSystemService(LAYOUT_INFLATER_SERVICE);
+                            View childLayout = inflater.inflate(
+                                    R.layout.user_member_selection_component, null);
+                            TextView userName = (TextView) childLayout
+                                    .findViewById(R.id.tvUserName);
+                            final ImageView userImage = (ImageView) childLayout
+                                    .findViewById(R.id.ivUserImage);
+                            Picasso.with(AddMemberPhotoActivity.this).load(file).transform(new CircleTransform()).into(userImage);
+                            addMoreImages.add(uploadObject.getFile_path());
+                            llAddMorePhotos.addView(childLayout);
+
+//                            Picasso.with(AddMemberPhotoActivity.this).load(file).transform(new CircleTransform()).into(ivProfilePic);
+//                            mUserPhoto = uploadObject.getFile_path();
+                        } else {
+                            Toast.makeText(AddMemberPhotoActivity.this, "Failed to update profile pic", Toast.LENGTH_LONG).show();
+                        }
+                        pgProgressBar.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onFailure(Call<UploadObject> call, Throwable t) {
+                        Log.d(TAG, "Error " + t.getMessage());
+                        pgProgressBar.setVisibility(View.GONE);
+                    }
+                });
+            } else {
+                EasyPermissions.requestPermissions(this, getString(R.string.read_file), READ_REQUEST_CODE, Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
+        }
+
     }
 
     private String getRealPathFromURIPath(Uri contentURI, Activity activity) {
