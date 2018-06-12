@@ -54,6 +54,19 @@
                 android:background="@mipmap/ic_reply"
                 android:textColor="@color/blue" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:id="@+id/tvWhatsappUser"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/tvMessage"
+                android:gravity="center"
+                android:textColor="@android:color/holo_green_dark"
+                android:padding="@dimen/margin_4"
+                android:drawableLeft="@mipmap/ic_whatsapp"
+                android:visibility="gone"
+                android:layout_margin="@dimen/margin_8"
+                android:layout_height="wrap_content" />
+
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

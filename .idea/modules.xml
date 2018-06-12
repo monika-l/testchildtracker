@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ChildTracker.iml" filepath="$PROJECT_DIR$/ChildTracker.iml" />
+      <module fileurl="file://E:\Professional\testchildtracker\ChildTracker.iml" filepath="E:\Professional\testchildtracker\ChildTracker.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://E:\Professional\testchildtracker\app\app.iml" filepath="E:\Professional\testchildtracker\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/testchildtracker.iml" filepath="$PROJECT_DIR$/testchildtracker.iml" />
+      <module fileurl="file://E:\Professional\testchildtracker\testchildtracker.iml" filepath="E:\Professional\testchildtracker\testchildtracker.iml" />
     </modules>
   </component>
 </project>

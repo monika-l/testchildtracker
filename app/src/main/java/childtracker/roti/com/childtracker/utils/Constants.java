@@ -45,6 +45,7 @@ public class Constants {
 
     public static final String REPLY_TO_USER_API = "/Webservices/ChildTracker/ReplyTheNotification.php";
     public static final String REPLY_TO_USER_API_MEMBER_ID = "memberId";
+    public static final String REPLY_TO_USER_API_USER_ID = "userId";
     public static final String REPLY_TO_USER_API_MESAGE = "message";
 
     public static final String LOGIN_API = "/Webservices/ChildTracker/LoginExistingUser.php";
@@ -53,7 +54,7 @@ public class Constants {
 
     public static final String REGISTER_API = "/Webservices/ChildTracker/LoginNewUser.php";
     public static final String REGISTER_API_NAME = "name";
-     public static final String REGISTER_API_MOBILE = "mobile";
+    public static final String REGISTER_API_MOBILE = "mobile";
     public static final String REGISTER_API_EMAIL = "email";
     public static final String REGISTER_API_PHOTO = "photo";
     public static final String REGISTER_API_PASSWORD = "password";
@@ -67,7 +68,7 @@ public class Constants {
     public static final String UPLOAD_API_MEMBER_ID = "memberId";
 
     public static final String BROADCAST_MESSAGE_TO_COMMUNITY_API = "http://54.186.94.218";
-
+    public static final String IMAGE_PREFIX_PATH = "http://52.91.166.193/Webservices/ChildTracker/";
 
 
 }

@@ -12,7 +12,8 @@ public interface IReplyToUser {
     @FormUrlEncoded
     Call<Void> replyToUser(
             @Field(Constants.REPLY_TO_USER_API_MEMBER_ID) String memberId,
-            @Field(Constants.REPLY_TO_USER_API_MESAGE) String message
+            @Field(Constants.REPLY_TO_USER_API_MESAGE) String message,
+            @Field(Constants.REPLY_TO_USER_API_USER_ID) String userId
 
 
     );

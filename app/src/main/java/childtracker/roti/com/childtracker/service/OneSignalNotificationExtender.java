@@ -51,16 +51,37 @@ public class OneSignalNotificationExtender extends NotificationExtenderService {
             ArrayList<NotificationDisplayDto> allNotifications = (ArrayList<NotificationDisplayDto>) ChildTrackerUtils.convertJsonToObject(customSharedPreferance.getString(Constants.SHARED_PREF_ALL_NOTFICATION), listType);
             NotificationDisplayDto notificationDisplayDto = new NotificationDisplayDto();
             Log.d(TAG, notification.payload.additionalData.toString());
-            String memberData = notification.payload.additionalData.getString("extra_data");
-            JSONObject jsonObj = new JSONObject(memberData);
-            JSONArray jsonArray = jsonObj.getJSONArray("memberInfo");
-            JSONObject memberDetails = (JSONObject) (jsonArray.get(0));
-            Log.d("noti = >>>>>>>", memberData);
-            Log.d("noti = >>>>>>>", memberDetails.getString("photo"));
-            notificationDisplayDto.setMessage(notification.payload.body);
-            notificationDisplayDto.setMemberId(jsonObj.getString("memberId"));
-            notificationDisplayDto.setImages(memberDetails.getString("photo"));
-            allNotifications.add(notificationDisplayDto);
+            if (notification.payload.additionalData.has("extra_data")) {
+                String memberData = notification.payload.additionalData.getString("extra_data");
+                JSONObject jsonObj = new JSONObject(memberData);
+                JSONArray jsonArray = jsonObj.getJSONArray("memberInfo");
+                JSONObject memberDetails = (JSONObject) (jsonArray.get(0));
+                Log.d("noti = >>>>>>>", memberData);
+                Log.d("noti = >>>>>>>", memberDetails.getString("photo"));
+                notificationDisplayDto.setMessage(notification.payload.body);
+                notificationDisplayDto.setMemberId(jsonObj.getString("memberId"));
+                notificationDisplayDto.setImages(memberDetails.getString("photo"));
+                allNotifications.add(notificationDisplayDto);
+            } else if (notification.payload.additionalData.has("replyInfo")) {
+                notificationDisplayDto.setMessage(notification.payload.body);
+                String memberData = notification.payload.additionalData.getString("replyInfo");
+                JSONObject jsonObj = new JSONObject(memberData);
+                String memberId = jsonObj.getString("memberId");
+                String userName = jsonObj.getString("userName");
+                String childName = jsonObj.getString("childName");
+                String childPhoto = jsonObj.getString("childPhoto");
+                 String userMobile = jsonObj.getString("userMobile");
+                String userPhoto = jsonObj.getString("userPhoto");
+                notificationDisplayDto.setMessage(notification.payload.body);
+                notificationDisplayDto.setMemberId(memberId);
+                notificationDisplayDto.setUserName(userName);
+                notificationDisplayDto.setChildName(childName);
+                notificationDisplayDto.setChildPhoto(childPhoto);
+                 notificationDisplayDto.setUserMobile(userMobile);
+                notificationDisplayDto.setUserPhoto(userPhoto);
+                allNotifications.add(notificationDisplayDto);
+            }
+
             customSharedPreferance.addString(Constants.SHARED_PREF_ALL_NOTFICATION, ChildTrackerUtils.convertObjectToJson(allNotifications));
             showNotification(ChildTrackerApplication.getContext(), "Child Tracker", notification.payload.body, null);
         } catch (JSONException e) {

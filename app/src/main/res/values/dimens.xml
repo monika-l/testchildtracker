@@ -16,4 +16,5 @@
     <dimen name="text_xxlarge">26.0dip</dimen>
     <dimen name="text_xxsmall">10.0sp</dimen>
     <dimen name="text_xxxsmall">9.0sp</dimen>
+    <dimen name="margin_30">30dp</dimen>
 </resources>

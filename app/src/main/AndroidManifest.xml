@@ -42,6 +42,11 @@
         <activity android:name=".activities.SendMessageSuccessfulActivity"></activity>
         <activity android:name=".activities.SendMessageToCommunityActivity"></activity>
 
+        <activity
+            android:name=".activities.ZoomPhotoActivity"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.CustomDialog" />
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="14c41ec566647ccd863405bef5f09fbb971df17e"
