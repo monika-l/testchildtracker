@@ -28,10 +28,10 @@
                 android:id="@+id/ivUserImage"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@mipmap/ic_user"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_margin="@dimen/margin_8" />
+                android:layout_margin="@dimen/margin_8"
+                android:src="@mipmap/ic_user" />
 
 
             <TextView
@@ -55,17 +55,28 @@
                 android:textColor="@color/blue" />
 
             <TextView
-                android:layout_width="wrap_content"
                 android:id="@+id/tvWhatsappUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/tvMessage"
-                android:gravity="center"
-                android:textColor="@android:color/holo_green_dark"
-                android:padding="@dimen/margin_4"
-                android:drawableLeft="@mipmap/ic_whatsapp"
-                android:visibility="gone"
                 android:layout_margin="@dimen/margin_8"
-                android:layout_height="wrap_content" />
+                android:drawableLeft="@mipmap/ic_whatsapp"
+                android:gravity="center"
+                android:padding="@dimen/margin_4"
+                android:textColor="@android:color/holo_green_dark"
+                android:visibility="gone" />
+
+
+            <ImageView
+                android:id="@+id/ivShowLocation"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/margin_8"
+                android:visibility="gone"
+                android:src="@mipmap/ic_map" />
 
         </RelativeLayout>
 

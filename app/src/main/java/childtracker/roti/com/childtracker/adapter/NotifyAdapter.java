@@ -38,7 +38,7 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.MyViewHold
     }
 
 
-    public NotifyAdapter( Context context , List<MemberDto.MemberMetadata> memberMetadata) {
+    public NotifyAdapter(Context context, List<MemberDto.MemberMetadata> memberMetadata) {
         mContext = context;
         this.mMemberMetaData = memberMetadata;
     }

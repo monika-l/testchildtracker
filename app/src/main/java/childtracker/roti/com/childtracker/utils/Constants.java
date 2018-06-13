@@ -14,6 +14,8 @@ public class Constants {
     public static final String EXTRA_COMMENT = "extra_comment";
     public static final String EXTRA_ADDRESS = "extra_address";
     public static final String EXTRA_MEMBER_DETAILS = "extra_member_details";
+    public static final String EXTRA_LAT = "extra_lat";
+    public static final String EXTRA_LNG = "extra_lng";
 
 
     public static final String SHARED_PREF_USER_ID = "shared_pref_user_id";
@@ -41,6 +43,8 @@ public class Constants {
     public static final String BROADCAST_MESSAGE_API_MESSAGE = "message";
     public static final String BROADCAST_MESSAGE_API_MOBILE = "mobileNumber";
     public static final String BROADCAST_MESSAGE_API_MEMBER = "memberId";
+    public static final String BROADCAST_MESSAGE_API_LAT = "lat";
+    public static final String BROADCAST_MESSAGE_API_LNG = "lng";
     public static final String BROADCAST_MESSAGE_API_TOKEN = "notificationToken";
 
     public static final String REPLY_TO_USER_API = "/Webservices/ChildTracker/ReplyTheNotification.php";

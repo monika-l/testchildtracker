@@ -35,9 +35,12 @@ public class SendMessageToCommunityActivity extends AppCompatActivity {
                 "FathersName : " + memberInfo.getFatherName() + "\n" +
                 "MothersName : " + memberInfo.getMotherName() + "\n" +
                 "Address : " + memberInfo.getAddress() + "\n";
-
+        String lat = getIntent().getStringExtra(Constants.EXTRA_LAT);
+        String lng = getIntent().getStringExtra(Constants.EXTRA_LNG);
         RetrofitRestApiProvider retrofitRestApiProvider = new RetrofitRestApiProvider(SendMessageToCommunityActivity.this, Constants.DOMAIN_API);
-        retrofitRestApiProvider.sendMessageToCommunity(mCallback, message,customSharedPreferance.getString(Constants.SHARED_PREF_PHONE),customSharedPreferance.getString(Constants.SHAREDPREF_PLAYER_ID),String.valueOf(memberInfo.getId()));
+        retrofitRestApiProvider.sendMessageToCommunity(mCallback, message, customSharedPreferance.getString(Constants.SHARED_PREF_PHONE),
+                customSharedPreferance.getString(Constants.SHAREDPREF_PLAYER_ID), String.valueOf(memberInfo.getId())
+                , lat, lng);
 
 
     }

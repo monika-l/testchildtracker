@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.PhoneNumberUtils;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import childtracker.roti.com.childtracker.R;
 import childtracker.roti.com.childtracker.activities.ZoomPhotoActivity;
@@ -42,6 +44,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tvMessage, tvReply, tvWhatsappUser;
         public ImageView ivUserImage;
+        public ImageView ivShowLocation;
 
         public MyViewHolder(View view) {
             super(view);
@@ -49,6 +52,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             tvWhatsappUser = (TextView) view.findViewById(R.id.tvWhatsappUser);
             tvReply = (TextView) view.findViewById(R.id.tvReply);
             ivUserImage = (ImageView) view.findViewById(R.id.ivUserImage);
+            ivShowLocation = (ImageView) view.findViewById(R.id.ivShowLocation);
+
         }
     }
 
@@ -76,11 +81,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             String displayMessage = "You have received reply from " + mMemberMetaData.get(position).getUserName() +
                     " for " + mMemberMetaData.get(position).getChildName() + " : " + "\n\n" + message;
             holder.tvMessage.setText(displayMessage);
-            if(mMemberMetaData.get(position).getUserPhoto()!=null && TextUtils.isEmpty(mMemberMetaData.get(position).getUserPhoto()) ==false){
+            if (mMemberMetaData.get(position).getUserPhoto() != null && TextUtils.isEmpty(mMemberMetaData.get(position).getUserPhoto()) == false) {
                 Picasso.with(mContext).load("http://52.91.166.193/Webservices/ChildTracker/" + mMemberMetaData.get(position).getUserPhoto()).transform(new CircleTransform()).into(holder.ivUserImage);
             }
             holder.tvWhatsappUser.setText(mMemberMetaData.get(position).getUserMobile());
             holder.tvWhatsappUser.setVisibility(View.VISIBLE);
+            holder.ivShowLocation.setVisibility(View.GONE);
 
             holder.tvWhatsappUser.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -88,10 +94,22 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     openWhatsApp(mMemberMetaData.get(position).getUserMobile());
                 }
             });
+
+
         } else {
 
             holder.tvMessage.setText(mMemberMetaData.get(position).getMessage());
             holder.tvWhatsappUser.setVisibility(View.GONE);
+            holder.ivShowLocation.setVisibility(View.VISIBLE);
+            holder.ivShowLocation.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String uri = String.format(Locale.ENGLISH, "geo:%f,%f", mMemberMetaData.get(position).getLat(), mMemberMetaData.get(position).getLng());
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                    mContext.startActivity(intent);
+                }
+            });
+
         }
 
 
@@ -145,12 +163,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             number = number.replace(" ", "").replace("+", "");
 
             Intent sendIntent = new Intent("android.intent.action.MAIN");
-            sendIntent.setComponent(new ComponentName("com.whatsapp","com.whatsapp.Conversation"));
-            sendIntent.putExtra("jid", PhoneNumberUtils.stripSeparators(number)+"@s.whatsapp.net");
+            sendIntent.setComponent(new ComponentName("com.whatsapp", "com.whatsapp.Conversation"));
+            sendIntent.putExtra("jid", PhoneNumberUtils.stripSeparators(number) + "@s.whatsapp.net");
             mContext.startActivity(sendIntent);
 
-        } catch(Exception e) {
-            Log.e("", "ERROR_OPEN_MESSANGER"+e.toString());
+        } catch (Exception e) {
+            Log.e("", "ERROR_OPEN_MESSANGER" + e.toString());
         }
     }
 

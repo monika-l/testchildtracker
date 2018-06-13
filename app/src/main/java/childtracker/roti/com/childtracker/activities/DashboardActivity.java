@@ -128,14 +128,16 @@ public class DashboardActivity extends AppCompatActivity implements OnMapReadyCa
                     @Override
                     public void onClick(View view) {
                         Intent siginActivity = new Intent(DashboardActivity.this, SendMessageToCommunityActivity.class);
+                        siginActivity.putExtra(Constants.EXTRA_LAT, "10.2");
+                        siginActivity.putExtra(Constants.EXTRA_LNG, "10.2");
                         siginActivity.putExtra(Constants.EXTRA_MEMBER_DETAILS, ChildTrackerUtils.convertObjectToJson(members.get(((int) userImage.getTag(R.string.app_name)))));
                         startActivity(siginActivity);
                     }
                 });
                 if (members.get(position).getPhoto() != null && TextUtils.isEmpty(members.get(position).getPhoto()) == false) {
                     String[] allPhotos = members.get(position).getPhoto().split(",");
-                    Log.d(TAG,members.get(position).getPhoto());
-                    Picasso.with(DashboardActivity.this).load("http://52.91.166.193/Webservices/ChildTracker/" +allPhotos[0]).transform(new CircleTransform()).into(userImage);
+                    Log.d(TAG, members.get(position).getPhoto());
+                    Picasso.with(DashboardActivity.this).load("http://52.91.166.193/Webservices/ChildTracker/" + allPhotos[0]).transform(new CircleTransform()).into(userImage);
                 } else {
                     Picasso.with(DashboardActivity.this).load(R.mipmap.ic_user).transform(new CircleTransform()).into(userImage);
                 }

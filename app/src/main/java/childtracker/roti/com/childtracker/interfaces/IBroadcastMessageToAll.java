@@ -14,7 +14,9 @@ public interface IBroadcastMessageToAll {
             @Field(Constants.BROADCAST_MESSAGE_API_MESSAGE) String message,
             @Field(Constants.BROADCAST_MESSAGE_API_MOBILE) String mobile,
             @Field(Constants.BROADCAST_MESSAGE_API_TOKEN) String notificationToken,
-            @Field(Constants.BROADCAST_MESSAGE_API_MEMBER) String memberId
+            @Field(Constants.BROADCAST_MESSAGE_API_MEMBER) String memberId,
+            @Field(Constants.BROADCAST_MESSAGE_API_LAT) String lat,
+            @Field(Constants.BROADCAST_MESSAGE_API_LNG) String lng
 
 
     );

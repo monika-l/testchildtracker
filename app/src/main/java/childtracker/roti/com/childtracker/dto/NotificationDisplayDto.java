@@ -7,13 +7,29 @@ public class NotificationDisplayDto {
     private String userId;
     private String memberId;
     private String images;
-
+    private String lat;
+    private String lng;
     private String userName;
     private String childName;
     private String childPhoto;
     private String userMobile;
     private String userPhoto;
 
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
 
     public String getUserName() {
         return userName;
