@@ -67,11 +67,11 @@ public class RetrofitRestApiProvider {
         }
     }
 
-    public void sendReplyToUser(Callback callback, String message, String memberId, String userId) {
+    public void sendReplyToUser(Callback callback, String message, String memberId, String userId,String lat,String lng) {
         if (ChildTrackerUtils.checkInternetConnection(mContext) == true) {
             Log.d(TAG, "inside registerUsers");
             IReplyToUser iBroadcastMessageToAll = mRetrofit.create(IReplyToUser.class);
-            Call<Void> call = iBroadcastMessageToAll.replyToUser(memberId, message, userId);
+            Call<Void> call = iBroadcastMessageToAll.replyToUser(memberId, message, userId,lat,lng);
             call.enqueue(callback);
         }
     }

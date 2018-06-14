@@ -5,7 +5,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.PhoneNumberUtils;
@@ -22,9 +21,9 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import childtracker.roti.com.childtracker.R;
+import childtracker.roti.com.childtracker.activities.ShowRouteActivity;
 import childtracker.roti.com.childtracker.activities.ZoomPhotoActivity;
 import childtracker.roti.com.childtracker.dto.NotificationDisplayDto;
 import childtracker.roti.com.childtracker.retrofit.RetrofitRestApiProvider;
@@ -91,7 +90,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             }
             holder.tvWhatsappUser.setText(mMemberMetaData.get(position).getUserMobile());
             holder.tvWhatsappUser.setVisibility(View.VISIBLE);
-            holder.ivShowLocation.setVisibility(View.GONE);
+
 
             holder.tvWhatsappUser.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -105,29 +104,24 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
             holder.tvMessage.setText(mMemberMetaData.get(position).getMessage());
             holder.tvWhatsappUser.setVisibility(View.GONE);
-            holder.ivShowLocation.setVisibility(View.VISIBLE);
-            holder.ivShowLocation.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mMemberMetaData.get(position).getLat() != null && mMemberMetaData.get(position).getLng() != null) {
-//                        String strUri = "http://maps.google.com/maps?q=loc:" + mMemberMetaData.get(position).getLat() + "," + mMemberMetaData.get(position).getLng() + " (" + mMemberMetaData.get(position).getMessage() + ")";
-//                        Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(strUri));
-//                        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-//                        mContext.startActivity(intent);
-
-                        String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?saddr=%f,%f(%s)&daddr=%f,%f (%s)", Float.parseFloat(mLat), Float.parseFloat(mLng), "Current location", Float.parseFloat(mMemberMetaData.get(position).getLat()), Float.parseFloat(mMemberMetaData.get(position).getLng()), "child location");
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                        intent.setPackage("com.google.android.apps.maps");
-                        mContext.startActivity(intent);
-
-
-                    } else {
-                        Toast.makeText(mContext, R.string.location_not_available, Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
 
         }
+
+        holder.ivShowLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mMemberMetaData.get(position).getLat() != null && mMemberMetaData.get(position).getLng() != null) {
+                    Intent showRoute = new Intent(mContext, ShowRouteActivity.class);
+                    showRoute.putExtra(Constants.EXTRA_LAT, mLat);
+                    showRoute.putExtra(Constants.EXTRA_LNG, mLng);
+                    showRoute.putExtra(Constants.EXTRA_LAT2, mMemberMetaData.get(position).getLat());
+                    showRoute.putExtra(Constants.EXTRA_LNG2, mMemberMetaData.get(position).getLng());
+                    mContext.startActivity(showRoute);
+                } else {
+                    Toast.makeText(mContext, R.string.location_not_available, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
 
         if (mMemberMetaData.get(position).getMessage().contains("Message from community")) {
@@ -151,7 +145,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         RetrofitRestApiProvider retrofitRestApiProvider = new RetrofitRestApiProvider(mContext, Constants.DOMAIN_API);
-                        retrofitRestApiProvider.sendReplyToUser(mCallback, mEdFinalDeliveryAddress.getText().toString(), mMemberMetaData.get(position).getMemberId(), customSharedPreferance.getString(Constants.SHARED_PREF_USER_ID));
+                        retrofitRestApiProvider.sendReplyToUser(mCallback, mEdFinalDeliveryAddress.getText().toString(), mMemberMetaData.get(position).getMemberId(), customSharedPreferance.getString(Constants.SHARED_PREF_USER_ID),mLat,mLng);
                     }
                 });
                 builder.setNegativeButton("Cancel", null);

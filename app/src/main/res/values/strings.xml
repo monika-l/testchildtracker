@@ -18,6 +18,7 @@
 
     <string name="password_activity_title"><![CDATA[<font color=\'#000\'>Password</font>]]></string>
     <string name="dashboard_activity_title"><![CDATA[<font color=\'#000\'>Dashboard</font>]]></string>
+    <string name="showroute_activity_title"><![CDATA[<font color=\'#000\'>Route</font>]]></string>
     <string name="email_activity_title"><![CDATA[<font color=\'#000\'>Email</font>]]></string>
     <string name="photo_activity_title"><![CDATA[<font color=\'#000\'>Add Photo</font>]]></string>
     <string name="signup_txt">Sighup</string>

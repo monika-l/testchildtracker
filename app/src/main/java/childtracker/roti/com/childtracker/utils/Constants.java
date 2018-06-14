@@ -16,6 +16,8 @@ public class Constants {
     public static final String EXTRA_MEMBER_DETAILS = "extra_member_details";
     public static final String EXTRA_LAT = "extra_lat";
     public static final String EXTRA_LNG = "extra_lng";
+    public static final String EXTRA_LAT2 = "extra_lat2";
+    public static final String EXTRA_LNG2 = "extra_lng2";
 
 
     public static final String SHARED_PREF_USER_ID = "shared_pref_user_id";
@@ -51,6 +53,8 @@ public class Constants {
     public static final String REPLY_TO_USER_API_MEMBER_ID = "memberId";
     public static final String REPLY_TO_USER_API_USER_ID = "userId";
     public static final String REPLY_TO_USER_API_MESAGE = "message";
+    public static final String REPLY_TO_USER_API__LAT = "lat";
+    public static final String REPLY_TO_USER_API__LNG = "lng";
 
     public static final String LOGIN_API = "/Webservices/ChildTracker/LoginExistingUser.php";
     public static final String LOGIN_API_MOBILE_NO = "mobileNumber";

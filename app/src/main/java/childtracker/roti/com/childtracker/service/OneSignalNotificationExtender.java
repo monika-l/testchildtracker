@@ -77,6 +77,8 @@ public class OneSignalNotificationExtender extends NotificationExtenderService {
                 String childPhoto = jsonObj.getString("childPhoto");
                 String userMobile = jsonObj.getString("userMobile");
                 String userPhoto = jsonObj.getString("userPhoto");
+                String lat = jsonObj.getString("lat");
+                String lng = jsonObj.getString("lng");
 
                 notificationDisplayDto.setMessage(notification.payload.body);
                 notificationDisplayDto.setMemberId(memberId);
@@ -85,7 +87,8 @@ public class OneSignalNotificationExtender extends NotificationExtenderService {
                 notificationDisplayDto.setChildPhoto(childPhoto);
                 notificationDisplayDto.setUserMobile(userMobile);
                 notificationDisplayDto.setUserPhoto(userPhoto);
-
+                notificationDisplayDto.setLat(lat);
+                notificationDisplayDto.setLng(lng);
                 allNotifications.add(notificationDisplayDto);
             }
 

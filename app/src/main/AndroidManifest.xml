@@ -41,6 +41,7 @@
         <activity android:name=".activities.NotificationsActivity"></activity>
         <activity android:name=".activities.SendMessageSuccessfulActivity"></activity>
         <activity android:name=".activities.SendMessageToCommunityActivity"></activity>
+        <activity android:name=".activities.ShowRouteActivity"></activity>
 
         <activity
             android:name=".activities.ZoomPhotoActivity"

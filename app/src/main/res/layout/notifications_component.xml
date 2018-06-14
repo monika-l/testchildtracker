@@ -75,7 +75,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="@dimen/margin_8"
-                android:visibility="gone"
+
                 android:src="@mipmap/ic_map" />
 
         </RelativeLayout>

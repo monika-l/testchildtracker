@@ -13,7 +13,9 @@ public interface IReplyToUser {
     Call<Void> replyToUser(
             @Field(Constants.REPLY_TO_USER_API_MEMBER_ID) String memberId,
             @Field(Constants.REPLY_TO_USER_API_MESAGE) String message,
-            @Field(Constants.REPLY_TO_USER_API_USER_ID) String userId
+            @Field(Constants.REPLY_TO_USER_API_USER_ID) String userId,
+            @Field(Constants.REPLY_TO_USER_API__LAT) String lat,
+            @Field(Constants.REPLY_TO_USER_API__LNG) String lng
 
 
     );
