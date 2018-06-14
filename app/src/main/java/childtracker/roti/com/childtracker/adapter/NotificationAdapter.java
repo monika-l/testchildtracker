@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -39,7 +40,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     private Context mContext;
     private ArrayList<NotificationDisplayDto> mMemberMetaData;
     private CustomSharedPreferance customSharedPreferance;
-//    private List<NotificationsDto.NotificationsMetaData> mMemberMetaData;
+    private final String mLng;
+    private final String mLat;
+    //    private List<NotificationsDto.NotificationsMetaData> mMemberMetaData;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tvMessage, tvReply, tvWhatsappUser;
@@ -58,10 +61,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
 
-    public NotificationAdapter(Context context, ArrayList<NotificationDisplayDto> memberMetadata) {
+    public NotificationAdapter(Context context, ArrayList<NotificationDisplayDto> memberMetadata, String lat, String lng) {
         this.mMemberMetaData = memberMetadata;
         mContext = context;
         customSharedPreferance = new CustomSharedPreferance(mContext);
+        mLat = lat;
+        mLng = lng;
     }
 
     @Override
@@ -82,7 +87,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                     " for " + mMemberMetaData.get(position).getChildName() + " : " + "\n\n" + message;
             holder.tvMessage.setText(displayMessage);
             if (mMemberMetaData.get(position).getUserPhoto() != null && TextUtils.isEmpty(mMemberMetaData.get(position).getUserPhoto()) == false) {
-                Picasso.with(mContext).load("http://52.91.166.193/Webservices/ChildTracker/" + mMemberMetaData.get(position).getUserPhoto()).transform(new CircleTransform()).into(holder.ivUserImage);
+                Picasso.with(mContext).load("http://52.91.166.193/Webservices/ChildTracker/" + mMemberMetaData.get(position).getUserPhoto()).placeholder(R.mipmap.ic_loading).transform(new CircleTransform()).into(holder.ivUserImage);
             }
             holder.tvWhatsappUser.setText(mMemberMetaData.get(position).getUserMobile());
             holder.tvWhatsappUser.setVisibility(View.VISIBLE);
@@ -91,7 +96,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             holder.tvWhatsappUser.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    openWhatsApp(mMemberMetaData.get(position).getUserMobile());
+                    openWhatsApp("+91" + mMemberMetaData.get(position).getUserMobile());
                 }
             });
 
@@ -104,9 +109,21 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             holder.ivShowLocation.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String uri = String.format(Locale.ENGLISH, "geo:%f,%f", mMemberMetaData.get(position).getLat(), mMemberMetaData.get(position).getLng());
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                    mContext.startActivity(intent);
+                    if (mMemberMetaData.get(position).getLat() != null && mMemberMetaData.get(position).getLng() != null) {
+//                        String strUri = "http://maps.google.com/maps?q=loc:" + mMemberMetaData.get(position).getLat() + "," + mMemberMetaData.get(position).getLng() + " (" + mMemberMetaData.get(position).getMessage() + ")";
+//                        Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(strUri));
+//                        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+//                        mContext.startActivity(intent);
+
+                        String uri = String.format(Locale.ENGLISH, "http://maps.google.com/maps?saddr=%f,%f(%s)&daddr=%f,%f (%s)", Float.parseFloat(mLat), Float.parseFloat(mLng), "Current location", Float.parseFloat(mMemberMetaData.get(position).getLat()), Float.parseFloat(mMemberMetaData.get(position).getLng()), "child location");
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                        intent.setPackage("com.google.android.apps.maps");
+                        mContext.startActivity(intent);
+
+
+                    } else {
+                        Toast.makeText(mContext, R.string.location_not_available, Toast.LENGTH_LONG).show();
+                    }
                 }
             });
 
@@ -145,7 +162,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         if (mMemberMetaData.get(position).getImages() != null && mMemberMetaData.get(position).getImages().length() > 0) {
             String[] allImages = mMemberMetaData.get(position).getImages().split(",");
-            Picasso.with(mContext).load("http://52.91.166.193/Webservices/ChildTracker/" + allImages[0]).transform(new CircleTransform()).into(holder.ivUserImage);
+            Picasso.with(mContext).load("http://52.91.166.193/Webservices/ChildTracker/" + allImages[0]).placeholder(R.mipmap.ic_loading).transform(new CircleTransform()).into(holder.ivUserImage);
             holder.ivUserImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

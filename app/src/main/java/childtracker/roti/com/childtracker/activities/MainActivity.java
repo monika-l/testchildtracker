@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 // user is existing user take to dashbaord
                 Intent siginActivity = new Intent(MainActivity.this, UserPasswordActivity.class);
                 siginActivity.putExtra(Constants.EXTRA_PASSWORD, loginResponseDto.getPassword());
+                siginActivity.putExtra(Constants.EXTRA_MOBILE, loginResponseDto.getMobile());
                 mCustomSharedPref.addString(Constants.SHARED_PREF_USER_ID, loginResponseDto.getUserId());
                 mCustomSharedPref.addString(Constants.SHARED_PREF_USER_PASSWORD, loginResponseDto.getPassword());
                 mCustomSharedPref.addString(Constants.SHARED_PREF_ALL_MEMBERS, ChildTrackerUtils.convertObjectToJson(loginResponseDto.getMembers()));

@@ -30,5 +30,7 @@
     <string name="please_enter_correct_password">Plese enter correct password</string>
     <string name="please_enter_valid_email_di">Please enter valid email id</string>
     <string name="please_enter_valid_name">Please enter valid name</string>
+    <string name="please_turn_on_network">Please turn on location</string>
+    <string name="location_not_available">Location not available</string>
 
 </resources>

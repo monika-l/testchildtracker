@@ -74,7 +74,7 @@ public class AddMemberPhotoActivity extends AppCompatActivity implements EasyPer
     public void onAddMoreClick() {
 
         Intent openGalleryIntent = new Intent(Intent.ACTION_PICK);
-        openGalleryIntent.setType("image/*");
+        openGalleryIntent.setType("image/png");
         startActivityForResult(openGalleryIntent, REQUEST_ADDMORE_GALLERY_CODE);
     }
 
@@ -82,7 +82,7 @@ public class AddMemberPhotoActivity extends AppCompatActivity implements EasyPer
     @OnClick(R.id.llPhoto)
     public void onProfileClick() {
         Intent openGalleryIntent = new Intent(Intent.ACTION_PICK);
-        openGalleryIntent.setType("image/*");
+        openGalleryIntent.setType("image/png");
         startActivityForResult(openGalleryIntent, REQUEST_GALLERY_CODE);
     }
 
@@ -199,7 +199,7 @@ public class AddMemberPhotoActivity extends AppCompatActivity implements EasyPer
                         UploadObject uploadObject = response.body();
                         if (uploadObject != null && uploadObject.getStatus() != null && uploadObject.getStatus().equals("true")) {
                             Toast.makeText(AddMemberPhotoActivity.this, "Profile pic uploaded", Toast.LENGTH_LONG).show();
-                            Picasso.with(AddMemberPhotoActivity.this).load(file).transform(new CircleTransform()).into(ivProfilePic);
+                            Picasso.with(AddMemberPhotoActivity.this).load(file).placeholder(R.mipmap.ic_loading).transform(new CircleTransform()).into(ivProfilePic);
                             mUserPhoto = uploadObject.getFile_path();
                         } else {
                             Toast.makeText(AddMemberPhotoActivity.this, "Failed to update profile pic", Toast.LENGTH_LONG).show();
@@ -249,7 +249,7 @@ public class AddMemberPhotoActivity extends AppCompatActivity implements EasyPer
                                     .findViewById(R.id.tvUserName);
                             final ImageView userImage = (ImageView) childLayout
                                     .findViewById(R.id.ivUserImage);
-                            Picasso.with(AddMemberPhotoActivity.this).load(file).transform(new CircleTransform()).into(userImage);
+                            Picasso.with(AddMemberPhotoActivity.this).load(file).placeholder(R.mipmap.ic_loading).transform(new CircleTransform()).into(userImage);
                             addMoreImages.add(uploadObject.getFile_path());
                             llAddMorePhotos.addView(childLayout);
 

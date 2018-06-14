@@ -2,13 +2,16 @@ package childtracker.roti.com.childtracker.retrofit;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
+import childtracker.roti.com.childtracker.dto.GenerateOtpDto;
 import childtracker.roti.com.childtracker.dto.GenericSuccessResponseDto;
 import childtracker.roti.com.childtracker.dto.LoginPojo;
 import childtracker.roti.com.childtracker.dto.LoginResponseDto;
 import childtracker.roti.com.childtracker.dto.MembersPojo;
 import childtracker.roti.com.childtracker.interfaces.IAddMember;
 import childtracker.roti.com.childtracker.interfaces.IBroadcastMessageToAll;
+import childtracker.roti.com.childtracker.interfaces.IGenerateSMS;
 import childtracker.roti.com.childtracker.interfaces.ILogin;
 import childtracker.roti.com.childtracker.interfaces.IRegisterNewUser;
 import childtracker.roti.com.childtracker.interfaces.IReplyToUser;
@@ -55,20 +58,20 @@ public class RetrofitRestApiProvider {
         }
     }
 
-    public void sendMessageToCommunity(Callback callback, String message, String mobile, String token,String memberId,String lat,String lng) {
+    public void sendMessageToCommunity(Callback callback, String message, String mobile, String token, String memberId, String lat, String lng) {
         if (ChildTrackerUtils.checkInternetConnection(mContext) == true) {
             Log.d(TAG, "inside registerUsers");
             IBroadcastMessageToAll iBroadcastMessageToAll = mRetrofit.create(IBroadcastMessageToAll.class);
-            Call<Void> call = iBroadcastMessageToAll.broadcastMessage(message, mobile, token,memberId,lat,lng);
+            Call<Void> call = iBroadcastMessageToAll.broadcastMessage(message, mobile, token, memberId, lat, lng);
             call.enqueue(callback);
         }
     }
 
-    public void sendReplyToUser(Callback callback, String message, String memberId,String userId) {
+    public void sendReplyToUser(Callback callback, String message, String memberId, String userId) {
         if (ChildTrackerUtils.checkInternetConnection(mContext) == true) {
             Log.d(TAG, "inside registerUsers");
             IReplyToUser iBroadcastMessageToAll = mRetrofit.create(IReplyToUser.class);
-            Call<Void> call = iBroadcastMessageToAll.replyToUser(memberId, message,userId);
+            Call<Void> call = iBroadcastMessageToAll.replyToUser(memberId, message, userId);
             call.enqueue(callback);
         }
     }
@@ -91,5 +94,19 @@ public class RetrofitRestApiProvider {
             call.enqueue(callback);
         }
     }
+
+
+    public void generateOTP(Callback callback, String mobileNo, String message, String prefix) {
+        if (ChildTrackerUtils.checkInternetConnection(mContext) == true) {
+            Log.d(TAG, "inside generateSMS");
+            IGenerateSMS iGenerateOTP = mRetrofit.create(IGenerateSMS.class);
+            Call<GenerateOtpDto> call = iGenerateOTP.generateSMS(mobileNo, message, prefix);
+            Log.d(TAG, "inside generateSMS" + call.request().url());
+            call.enqueue(callback);
+        } else {
+            Toast.makeText(mContext, "could not send you password , please try again later", Toast.LENGTH_LONG).show();
+        }
+    }
+
 
 }

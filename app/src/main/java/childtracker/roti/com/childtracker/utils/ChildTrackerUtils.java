@@ -35,6 +35,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
+import childtracker.roti.com.childtracker.retrofit.RetrofitRestApiProvider;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -96,6 +97,11 @@ public class ChildTrackerUtils {
             return Patterns.EMAIL_ADDRESS.matcher(target)
                     .matches();
         }
+    }
+
+    public static void sendPasswordToMobile(Activity activity, Callback callback, String mobileNo, String message) {
+        RetrofitRestApiProvider retrofitRestApiProvider = new RetrofitRestApiProvider(activity, Constants.DOMAIN_API);
+        retrofitRestApiProvider.generateOTP(callback, mobileNo, message, "+91");
     }
 
 
@@ -222,9 +228,6 @@ public class ChildTrackerUtils {
     }
 
 
-
-
-
     public static String convertDateToDatePickerFormat(int year, int month, int day) {
         String result = null;
         try {
@@ -238,8 +241,6 @@ public class ChildTrackerUtils {
         }
         return result;
     }
-
-
 
 
     /**
@@ -263,8 +264,6 @@ public class ChildTrackerUtils {
         }
         return updatedTime;
     }
-
-
 
 
     /**
@@ -293,8 +292,6 @@ public class ChildTrackerUtils {
         return Settings.Secure.getString(activity.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
     }
-
-
 
 
     /**
@@ -358,7 +355,6 @@ public class ChildTrackerUtils {
     };
 
 
-
     /**
      * Returns Calendar Base URI, supports both new and old OS.
      */
@@ -376,7 +372,6 @@ public class ChildTrackerUtils {
         }
         return calendarURI.toString();
     }
-
 
 
     public static void disableSpaceFromEditext(final EditText editText) {
@@ -401,7 +396,6 @@ public class ChildTrackerUtils {
             }
         });
     }
-
 
 
     public static void navigateToLocationOnGoogleMap(Context context, Double lat, Double lng, String title) {
@@ -431,6 +425,7 @@ public class ChildTrackerUtils {
         }
         return result;
     }
+
     public static String getDateWithBuffer(int extraDays) {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");

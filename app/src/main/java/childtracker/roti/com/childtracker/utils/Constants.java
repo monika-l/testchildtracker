@@ -64,6 +64,11 @@ public class Constants {
     public static final String REGISTER_API_PASSWORD = "password";
     public static final String REGISTER_API_NOTIFICATION_TOKEN = "notificationToken";
 
+    public static final String ROTI_MSG_91_OTP_API = "/Webservices/Customer/GenerateOTP.php";
+    public static final String ROTI_MSG_91_API_MOBILE = "mobile";
+    public static final String ROTI_MSG_91_API_MOBILE_PREFIX = "prefix";
+    public static final String ROTI_MSG_91_API_MESSAGE = "message";
+
 
     public static final String CREATE_LOGIN_API = "http://54.186.94.218";
 

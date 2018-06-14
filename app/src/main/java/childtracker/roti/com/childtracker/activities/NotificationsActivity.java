@@ -24,7 +24,7 @@ import childtracker.roti.com.childtracker.utils.CustomSharedPreferance;
 public class NotificationsActivity extends AppCompatActivity {
 
 
-   // private ArrayList<NotificationsDto.NotificationsMetaData> memberDtos = new ArrayList<NotificationsDto.NotificationsMetaData>();
+    // private ArrayList<NotificationsDto.NotificationsMetaData> memberDtos = new ArrayList<NotificationsDto.NotificationsMetaData>();
 
     ArrayList<NotificationDisplayDto> allNotifications = new ArrayList<NotificationDisplayDto>();
     @BindView(R.id.rvNotification)
@@ -38,8 +38,9 @@ public class NotificationsActivity extends AppCompatActivity {
         ButterKnife.bind(NotificationsActivity.this);
         getSupportActionBar().setTitle(Html.fromHtml(getString(R.string.notify_activity_title)));
         prepareData();
-
-        NotificationAdapter adapter = new NotificationAdapter(NotificationsActivity.this ,allNotifications);
+        String lat = getIntent().getStringExtra(Constants.EXTRA_LAT);
+        String lng = getIntent().getStringExtra(Constants.EXTRA_LNG);
+        NotificationAdapter adapter = new NotificationAdapter(NotificationsActivity.this, allNotifications, lat, lng);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         rvMembersList.setLayoutManager(mLayoutManager);
         rvMembersList.setItemAnimator(new DefaultItemAnimator());

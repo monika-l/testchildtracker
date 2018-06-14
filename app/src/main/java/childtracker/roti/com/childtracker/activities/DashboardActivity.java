@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -82,8 +83,16 @@ public class DashboardActivity extends AppCompatActivity implements OnMapReadyCa
 
     @OnClick(R.id.tvBell)
     public void onClickBell() {
-        Intent siginActivity = new Intent(DashboardActivity.this, NotificationsActivity.class);
-        startActivity(siginActivity);
+        if(mylocation!=null){
+            Intent siginActivity = new Intent(DashboardActivity.this, NotificationsActivity.class);
+            siginActivity.putExtra(Constants.EXTRA_LAT,String.valueOf(mylocation.getLatitude()));
+            siginActivity.putExtra(Constants.EXTRA_LNG,String.valueOf(mylocation.getLongitude()));
+            startActivity(siginActivity);
+        }else{
+            Toast.makeText(DashboardActivity.this, R.string.please_turn_on_network, Toast.LENGTH_LONG).show();
+
+        }
+
     }
 
     @OnClick(R.id.btAddMember)
@@ -127,19 +136,24 @@ public class DashboardActivity extends AppCompatActivity implements OnMapReadyCa
                 userImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent siginActivity = new Intent(DashboardActivity.this, SendMessageToCommunityActivity.class);
-                        siginActivity.putExtra(Constants.EXTRA_LAT, "10.2");
-                        siginActivity.putExtra(Constants.EXTRA_LNG, "10.2");
-                        siginActivity.putExtra(Constants.EXTRA_MEMBER_DETAILS, ChildTrackerUtils.convertObjectToJson(members.get(((int) userImage.getTag(R.string.app_name)))));
-                        startActivity(siginActivity);
+                        if (mylocation != null) {
+                            Intent siginActivity = new Intent(DashboardActivity.this, SendMessageToCommunityActivity.class);
+                            siginActivity.putExtra(Constants.EXTRA_LAT, String.valueOf(mylocation.getLatitude()));
+                            siginActivity.putExtra(Constants.EXTRA_LNG, String.valueOf(mylocation.getLongitude()));
+                            siginActivity.putExtra(Constants.EXTRA_MEMBER_DETAILS, ChildTrackerUtils.convertObjectToJson(members.get(((int) userImage.getTag(R.string.app_name)))));
+                            startActivity(siginActivity);
+                        } else {
+                            Toast.makeText(DashboardActivity.this, R.string.please_turn_on_network, Toast.LENGTH_LONG).show();
+                        }
+
                     }
                 });
                 if (members.get(position).getPhoto() != null && TextUtils.isEmpty(members.get(position).getPhoto()) == false) {
                     String[] allPhotos = members.get(position).getPhoto().split(",");
                     Log.d(TAG, members.get(position).getPhoto());
-                    Picasso.with(DashboardActivity.this).load("http://52.91.166.193/Webservices/ChildTracker/" + allPhotos[0]).transform(new CircleTransform()).into(userImage);
+                    Picasso.with(DashboardActivity.this).load("http://52.91.166.193/Webservices/ChildTracker/" + allPhotos[0]).placeholder(R.mipmap.ic_loading).transform(new CircleTransform()).into(userImage);
                 } else {
-                    Picasso.with(DashboardActivity.this).load(R.mipmap.ic_user).transform(new CircleTransform()).into(userImage);
+                    Picasso.with(DashboardActivity.this).load(R.mipmap.ic_user).placeholder(R.mipmap.ic_loading).transform(new CircleTransform()).into(userImage);
                 }
 
                 userName.setText(members.get(position).getChildName());

@@ -15,7 +15,7 @@
         android:layout_marginRight="@dimen/margin_16"
         android:gravity="center"
         android:layout_centerInParent="true"
-        android:hint="Enter fathers anme"
+        android:hint="Enter fathers name"
         android:inputType="textEmailAddress" />
 
 

@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Random;
 
 import childtracker.roti.com.childtracker.R;
 import childtracker.roti.com.childtracker.activities.ChildTrackerApplication;
@@ -99,7 +100,11 @@ public class OneSignalNotificationExtender extends NotificationExtenderService {
     public void showNotification(Context context, String title, String body, Intent intent) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        int notificationId = 1;
+        int min = 100;
+        int max = 99999;
+
+        Random random = new Random();
+        int notificationId = random.nextInt(max - min + 1) + min;
         String channelId = "channel-01";
         String channelName = "Channel Name";
         int importance = NotificationManager.IMPORTANCE_HIGH;
@@ -113,6 +118,7 @@ public class OneSignalNotificationExtender extends NotificationExtenderService {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle(title)
+                .setStyle(new NotificationCompat.BigTextStyle())
                 .setContentText(body);
 
 

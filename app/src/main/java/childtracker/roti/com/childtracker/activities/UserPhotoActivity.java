@@ -63,7 +63,7 @@ public class UserPhotoActivity extends AppCompatActivity implements EasyPermissi
     @OnClick(R.id.llPhoto)
     public void onProfileClick() {
         Intent openGalleryIntent = new Intent(Intent.ACTION_PICK);
-        openGalleryIntent.setType("image/*");
+        openGalleryIntent.setType("image/png");
         startActivityForResult(openGalleryIntent, REQUEST_GALLERY_CODE);
     }
 
@@ -155,7 +155,7 @@ public class UserPhotoActivity extends AppCompatActivity implements EasyPermissi
                         UploadObject uploadObject = response.body();
                         if (uploadObject != null && uploadObject.getStatus() != null && uploadObject.getStatus().equals("true")) {
                             Toast.makeText(UserPhotoActivity.this, "Profile pic uploaded", Toast.LENGTH_LONG).show();
-                            Picasso.with(UserPhotoActivity.this).load(file).transform(new CircleTransform()).into(ivProfilePic);
+                            Picasso.with(UserPhotoActivity.this).load(file).placeholder(R.mipmap.ic_loading).transform(new CircleTransform()).into(ivProfilePic);
                             mUserPhoto = uploadObject.getFile_path();
                         } else {
                             Toast.makeText(UserPhotoActivity.this, "Failed to update profile pic", Toast.LENGTH_LONG).show();
